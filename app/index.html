@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>title</title>
+    <!--<link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="stylesheet.css" type="text/css">-->
+  </head>
+  <body>
+  <script>
+  var request = require("request")
+  var url = "http://THIS_IS_AN_SECRET_DOMAIN/vertretungsplan?" +
+      "school=Schleswig_Lornsenschule" +
+      "&v=1337"
+
+  request({
+      url: url,
+      json: true
+  }, function (error, response, body) {
+
+      if (!error && response.statusCode === 200) {
+          //var lsJson = JSON.parse(body);
+          document.all.school.innerHTML = body.schoolName; // Print the json response
+      }
+  })
+  </script>
+  <h1>Hello World!</h1>
+  <h2 id="school"></h2>
+  </body>
+</html>
