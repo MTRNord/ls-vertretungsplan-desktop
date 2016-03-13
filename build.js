@@ -1,8 +1,8 @@
 var NwBuilder = require('nw-builder');
 var nw = new NwBuilder({
-    files: './cache', // use the glob format
+    files: './app/**', // use the glob format
     platforms: ['win', 'linux'],
-    version: '0.0.1'
+    version: 'v0.12.3'
 });
 
 //Log stuff you want

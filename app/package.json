@@ -1,0 +1,25 @@
+{
+  "name": "ls-vertretungsplan-desktop",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "",
+  "window": {
+    "title": "NW.js demo",
+    "icon": "link.png",
+    "toolbar": false,
+    "frame": true,
+    "width": 800,
+    "height": 600,
+    "position": "center",
+    "min_width": 400,
+    "min_height": 200
+  },
+  "webkit": {
+    "plugin": true
+  }
+}
