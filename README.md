@@ -8,5 +8,5 @@ This Desktop App uses an API by @johan12345 that is NOT managed by me! I don't h
 
 1. Clone the Repository
 2. Run `npm install`
-3a. If You use Windows run `build.cmd`
-3b. Everybody else go into the app directory and run `npm install` and now run `node build.js` in the root
+3. If You use Windows run `build.cmd` otherwise go to 4
+4. Everybody else go into the app directory and run `npm install` and now run `node build.js` in the root
