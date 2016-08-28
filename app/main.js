@@ -22,7 +22,6 @@ function update () {
     return;
   }
  
-  # restart app, then update will be applied
   quitAndUpdate();
 }
 
