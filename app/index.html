@@ -11,10 +11,20 @@
     <title>Lornsenschule Vertretungsplan</title>
   </head>
   <body>
-    <div class="bmd-layout-container">
+    <div class="bmd-layout-container" id="Main">
       <main class="bmd-layout-content">
-        <div class="container" id="representations">
+        <div class="container">
           <h1 id="school"></h1></br>
+
+          <ul class="nav nav-tabs" id="Tabs">
+            <li class="active"><a data-target="#vertretungen" data-toggle="tab">Profile</a></li>
+            <li><a data-target="#messages" data-toggle="tab">Messages</a></li>
+          </ul>
+
+          <div class="tab-content">
+            <div class="tab-pane active" id="vertretungen"></div>
+            <div class="tab-pane" id="messages"></div>
+          </div>
 
         </div>
       </main>
@@ -57,7 +67,7 @@
                   if (classes.hasOwnProperty(key)) {
                     klassen = classes[key]
                     klasse = klassen.klasse
-                    $("#representations").append('<h3>' + klasse + '</h3>')
+                    $("#vertretungen").append('<h3>' + klasse + '</h3>')
                     representations = classes[key].vertretung
                     for (var key in representations) {
                       if (representations.hasOwnProperty(key)) {
@@ -68,30 +78,30 @@
                         text = representations_details.text
                         if (representation_type == "Vertretung") {
                           if (lesson.match(reg)) {
-                            $("#representations").append('<div class="card card-block" style="height: 10%; background-color: #2196F3; color: #fff">' + '<div class="row">' + '<div class="col-md-4" style="position: relative; margin: 0;"><p style="font-size: 300%; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">' + lesson + '</p></div>' + '<div class="col-md-8"><h4>' + representation_type + '</h4></br><h7>' + text + '</h7></div>' + '</div>' + '</div>')
+                            $("#vertretungen").append('<div class="card card-block" style="height: 10%; background-color: #2196F3; color: #fff">' + '<div class="row">' + '<div class="col-md-4" style="position: relative; margin: 0;"><p style="font-size: 300%; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">' + lesson + '</p></div>' + '<div class="col-md-8"><h4>' + representation_type + '</h4></br><h7>' + text + '</h7></div>' + '</div>' + '</div>')
                           }else{
-                            $("#representations").append('<div class="card card-block" style="height: 10%; background-color: #2196F3; color: #fff">' + '<div class="row">' + '<div class="col-md-4" style="position: relative; margin: 0;"><p style="font-size: 350%; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">' + lesson + '</p></div>' + '<div class="col-md-8"><h4>' + representation_type + '</h4></br><h7>' + text + '</h7></div>' + '</div>' + '</div>')
+                            $("#vertretungen").append('<div class="card card-block" style="height: 10%; background-color: #2196F3; color: #fff">' + '<div class="row">' + '<div class="col-md-4" style="position: relative; margin: 0;"><p style="font-size: 350%; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">' + lesson + '</p></div>' + '<div class="col-md-8"><h4>' + representation_type + '</h4></br><h7>' + text + '</h7></div>' + '</div>' + '</div>')
                           }
                         }else{
                           if (representation_type == "Betreuung") {
                             if (lesson.match(reg)) {
-                              $("#representations").append('<div class="card card-block" style="height: 10%; background-color: #2196F3; color: #fff">' + '<div class="row">' + '<div class="col-md-4" style="position: relative; margin: 0;"><p style="font-size: 300%; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">' + lesson + '</p></div>' + '<div class="col-md-8"><h4>' + representation_type + '</h4></br><h7>' + text + '</h7></div>' + '</div>' + '</div>')
+                              $("#vertretungen").append('<div class="card card-block" style="height: 10%; background-color: #2196F3; color: #fff">' + '<div class="row">' + '<div class="col-md-4" style="position: relative; margin: 0;"><p style="font-size: 300%; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">' + lesson + '</p></div>' + '<div class="col-md-8"><h4>' + representation_type + '</h4></br><h7>' + text + '</h7></div>' + '</div>' + '</div>')
                             }else{
-                              $("#representations").append('<div class="card card-block" style="height: 10%; background-color: #2196F3; color: #fff">' + '<div class="row">' + '<div class="col-md-4" style="position: relative; margin: 0;"><p style="font-size: 350%; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">' + lesson + '</p></div>' + '<div class="col-md-8"><h4>' + representation_type + '</h4></br><h7>' + text + '</h7></div>' + '</div>' + '</div>')
+                              $("#vertretungen").append('<div class="card card-block" style="height: 10%; background-color: #2196F3; color: #fff">' + '<div class="row">' + '<div class="col-md-4" style="position: relative; margin: 0;"><p style="font-size: 350%; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">' + lesson + '</p></div>' + '<div class="col-md-8"><h4>' + representation_type + '</h4></br><h7>' + text + '</h7></div>' + '</div>' + '</div>')
                             }
                           }else{
                             if (representation_type == "Unterricht geändert") {
                               if (lesson.match(reg)) {
-                                $("#representations").append('<div class="card card-block" style="height: 10%; background-color: #FFA000; color: #fff">' + '<div class="row">' + '<div class="col-md-4" style="position: relative; margin: 0;"><p style="font-size: 300%; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">' + lesson + '</p></div>' + '<div class="col-md-8"><h4>' + representation_type + '</h4></br><h7>' + text + '</h7></div>' + '</div>' + '</div>')
+                                $("#vertretungen").append('<div class="card card-block" style="height: 10%; background-color: #FFA000; color: #fff">' + '<div class="row">' + '<div class="col-md-4" style="position: relative; margin: 0;"><p style="font-size: 300%; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">' + lesson + '</p></div>' + '<div class="col-md-8"><h4>' + representation_type + '</h4></br><h7>' + text + '</h7></div>' + '</div>' + '</div>')
                               }else{
-                                $("#representations").append('<div class="card card-block" style="height: 10%; background-color: #FFA000; color: #fff">' + '<div class="row">' + '<div class="col-md-4" style="position: relative; margin: 0;"><p style="font-size: 350%; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">' + lesson + '</p></div>' + '<div class="col-md-8"><h4>' + representation_type + '</h4></br><h7>' + text + '</h7></div>' + '</div>' + '</div>')
+                                $("#vertretungen").append('<div class="card card-block" style="height: 10%; background-color: #FFA000; color: #fff">' + '<div class="row">' + '<div class="col-md-4" style="position: relative; margin: 0;"><p style="font-size: 350%; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">' + lesson + '</p></div>' + '<div class="col-md-8"><h4>' + representation_type + '</h4></br><h7>' + text + '</h7></div>' + '</div>' + '</div>')
                               }
                             }else{
                               if (representation_type == "Lehrertausch") {
                                 if (lesson.match(reg)) {
-                                  $("#representations").append('<div class="card card-block" style="height: 10%; background-color: #9C27B0; color: #fff">' + '<div class="row">' + '<div class="col-md-4" style="position: relative; margin: 0;"><p style="font-size: 300%; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">' + lesson + '</p></div>' + '<div class="col-md-8"><h4>' + representation_type + '</h4></br><h7>' + text + '</h7></div>' + '</div>' + '</div>')
+                                  $("#vertretungen").append('<div class="card card-block" style="height: 10%; background-color: #9C27B0; color: #fff">' + '<div class="row">' + '<div class="col-md-4" style="position: relative; margin: 0;"><p style="font-size: 300%; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">' + lesson + '</p></div>' + '<div class="col-md-8"><h4>' + representation_type + '</h4></br><h7>' + text + '</h7></div>' + '</div>' + '</div>')
                                 }else{
-                                  $("#representations").append('<div class="card card-block" style="height: 10%; background-color: #9C27B0; color: #fff">' + '<div class="row">' + '<div class="col-md-4" style="position: relative; margin: 0;"><p style="font-size: 350%; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">' + lesson + '</p></div>' + '<div class="col-md-8"><h4>' + representation_type + '</h4></br><h7>' + text + '</h7></div>' + '</div>' + '</div>')
+                                  $("#vertretungen").append('<div class="card card-block" style="height: 10%; background-color: #9C27B0; color: #fff">' + '<div class="row">' + '<div class="col-md-4" style="position: relative; margin: 0;"><p style="font-size: 350%; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">' + lesson + '</p></div>' + '<div class="col-md-8"><h4>' + representation_type + '</h4></br><h7>' + text + '</h7></div>' + '</div>' + '</div>')
                                 }
                               }
                             }
@@ -105,9 +115,11 @@
             }
           } 
         }else{
-            $("#representations").append('<p class="bg-danger">Scheinbar gehtdein Internet nicht :/</p>')
+            $("#Main").append('<p class="bg-danger">Scheinbar geht dein Internet nicht :/</p>')
           }
       })
+
+      $('#Tabs a:last').tab('show')
     </script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap/bootstrap.min.js"></script>
