@@ -10,19 +10,20 @@ function update () {
  
   autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateUrl, quitAndUpdate) {
  
-  var index = dialog.showMessageBox(mainWindow, {
-    type: 'info',
-    buttons: [i18n.__('Restart'), i18n.__('Later')],
-    title: "Typetalk",
-    message: i18n.__('The new version has been downloaded. Please restart the application to apply the updates.'),
-    detail: releaseName + "\n\n" + releaseNotes
-  });
- 
-  if (index === 1) {
-    return;
+    var index = dialog.showMessageBox(mainWindow, {
+      type: 'info',
+      buttons: [i18n.__('Restart'), i18n.__('Later')],
+      title: "Typetalk",
+      message: i18n.__('The new version has been downloaded. Please restart the application to apply the updates.'),
+      detail: releaseName + "\n\n" + releaseNotes
+    });
+   
+    if (index === 1) {
+      return;
+    }
+   
+    quitAndUpdate();
   }
- 
-  quitAndUpdate();
 }
 
 function createWindow () {
