@@ -9,8 +9,6 @@ engines:
     config:
       languages:
       - javascript
-  nodesecurity:
-    enabled: true
   fixme:
     enabled: true
 ratings:
