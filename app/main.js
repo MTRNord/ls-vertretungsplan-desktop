@@ -23,7 +23,7 @@ function update () {
     }
    
     quitAndUpdate();
-  }
+  });
 }
 
 function createWindow () {
