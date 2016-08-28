@@ -1,8 +1,11 @@
 {
-  "name": "ls-vertretungsplan-desktop",
-  "version": "0.0.0",
-  "dependencies": {},
+  "name": "ls_vertretungsplan_desktop",
+  "version": "0.0.2",
+  "description": "Eine Anwendung die den Vertretungsplan auf dem Desktop anzeigt",
+  "author": "Marcel Radzio <info@nordgedanken.de>",
+  "license": "",
   "devDependencies": {
-    "nw-builder": "^2.2.0"
+    "electron": "^1.3.4",
+    "electron-winstaller": "^2.3.4"
   }
 }
