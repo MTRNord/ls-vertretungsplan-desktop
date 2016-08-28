@@ -1,29 +1,117 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>title</title>
-    <!--<link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
-    <link rel="stylesheet" href="stylesheet.css" type="text/css">-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Material Design fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/FezVrasta/bootstrap-material-design/dist/dist/bootstrap-material-design.min.css">
+    <title>Lornsenschule Vertretungsplan</title>
   </head>
   <body>
-  <script>
-  var request = require("request")
-  var url = "http://THIS_IS_AN_SECRET_DOMAIN/vertretungsplan?" +
-      "school=Schleswig_Lornsenschule" +
-      "&v=1337"
+    <div class="bmd-layout-container">
+      <main class="bmd-layout-content">
+        <div class="container" id="representations">
+          <h1 id="school"></h1>
 
-  request({
-      url: url,
-      json: true
-  }, function (error, response, body) {
+        </div>
+      </main>
+     </div>
 
-      if (!error && response.statusCode === 200) {
-          //var lsJson = JSON.parse(body);
-          document.all.school.innerHTML = body.schoolName; // Print the json response
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+        <script>
+      var request = require("request")
+      //<!-- http://THIS_IS_AN_SECRET_DOMAIN -->
+      var url = "http://THIS_IS_AN_SECRET_DOMAIN/vertretungsplan?" +
+        "school=Schleswig_Lornsenschule" +
+        "&v=1337"
+
+      if (typeof jQuery == 'undefined') {  
+        console.warn("JQUERY NOT LOADED!!!");
       }
-  })
-  </script>
-  <h1>Hello World!</h1>
-  <h2 id="school"></h2>
+
+      request({
+        url: url,
+        json: true
+      }, function (error, response, body) {
+
+        if (!error && response.statusCode === 200) {
+          //var lsJson = JSON.parse(body);
+          document.all.school.innerHTML = body.schoolName + ' Vertretungsplan'; // Print the json response
+          for (var key in body.tage) {
+            if (body.tage.hasOwnProperty(key)) {
+              //////////////////////////////////////////////////////////////
+              //////////////////////////////////////////////////////////////
+              //                                                          //
+              //                      1 == morgen                         //
+              //                      0 == heute                          //
+              //                                                          //
+              //////////////////////////////////////////////////////////////
+              //////////////////////////////////////////////////////////////
+              if (key == 1) {
+                classes = body.tage[key].klassen
+                for (var key in classes) {
+                  if (classes.hasOwnProperty(key)) {
+                    klassen = classes[key]
+                    klasse = klassen.klasse
+                    $("#representations").append('<h3>' + klasse + '</h3>')
+                    representations = classes[key].vertretung
+                    for (var key in representations) {
+                      if (representations.hasOwnProperty(key)) {
+                        representations_details = representations[key]
+                        var reg = new RegExp('[-]');
+                        lesson = representations_details.lesson
+                        representation_type = representations_details.type
+                        text = representations_details.text
+                        if (representation_type == "Vertretung") {
+                          if (lesson.match(reg)) {
+                            $("#representations").append('<div class="card card-block" style="height: 10%; background-color: #2196F3; color: #fff">' + '<div class="row">' + '<div width="20%" class="mdl-cell col-xs-12 col-sm-6 col-md-3" style="position: relative; margin: 0;"><p style="font-size: 300%; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">' + lesson + '</p></div>' + '<div width="80%" class="mdl-cell col-xs-12 col-sm-6 col-md-3"><h4>' + representation_type + '</h4></br><p>' + text + '</div>' + '</div>' + '</div>')
+                          }else{
+                            $("#representations").append('<div class="card card-block" style="height: 10%; background-color: #2196F3; color: #fff">' + '<div class="row">' + '<div width="20%" class="mdl-cell col-xs-12 col-sm-6 col-md-3" style="position: relative; margin: 0;"><p style="font-size: 350%; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">' + lesson + '</p></div>' + '<div width="80%" class="mdl-cell col-xs-12 col-sm-6 col-md-3"><h4>' + representation_type + '</h4></br><p>' + text + '</div>' + '</div>' + '</div>')
+                          }
+                        }else{
+                          if (representation_type == "Betreuung") {
+                            if (lesson.match(reg)) {
+                              $("#representations").append('<div class="card card-block" style="height: 10%; background-color: #2196F3; color: #fff">' + '<div class="row">' + '<div width="20%" class="mdl-cell col-xs-12 col-sm-6 col-md-3" style="position: relative; margin: 0;"><p style="font-size: 300%; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">' + lesson + '</p></div>' + '<div width="80%" class="mdl-cell col-xs-12 col-sm-6 col-md-3"><h4>' + representation_type + '</h4></br><p>' + text + '</div>' + '</div>' + '</div>')
+                            }else{
+                              $("#representations").append('<div class="card card-block" style="height: 10%; background-color: #2196F3; color: #fff">' + '<div class="row">' + '<div width="20%" class="mdl-cell col-xs-12 col-sm-6 col-md-3" style="position: relative; margin: 0;"><p style="font-size: 350%; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">' + lesson + '</p></div>' + '<div width="80%" class="mdl-cell col-xs-12 col-sm-6 col-md-3"><h4>' + representation_type + '</h4></br><p>' + text + '</div>' + '</div>' + '</div>')
+                            }
+                          }else{
+                            if (representation_type == "Unterricht geändert") {
+                              if (lesson.match(reg)) {
+                                $("#representations").append('<div class="card card-block" style="height: 10%; background-color: #FFA000; color: #fff">' + '<div class="row">' + '<div width="20%" class="mdl-cell col-xs-12 col-sm-6 col-md-3" style="position: relative; margin: 0;"><p style="font-size: 300%; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">' + lesson + '</p></div>' + '<div width="80%" class="mdl-cell col-xs-12 col-sm-6 col-md-3"><h4">' + representation_type + '</h4></br><p>' + text + '</div>' + '</div>' + '</div>')
+                              }else{
+                                $("#representations").append('<div class="card card-block" style="height: 10%; background-color: #FFA000; color: #fff">' + '<div class="row">' + '<div width="20%" class="mdl-cell col-xs-12 col-sm-6 col-md-3" style="position: relative; margin: 0;"><p style="font-size: 350%; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">' + lesson + '</p></div>' + '<div width="80%" class="mdl-cell col-xs-12 col-sm-6 col-md-3"><h4>' + representation_type + '</h4></br><p>' + text + '</div>' + '</div>' + '</div>')
+                              }
+                            }else{
+                              if (representation_type == "Lehrertausch") {
+                                if (lesson.match(reg)) {
+                                  $("#representations").append('<div class="card card-block" style="height: 10%; background-color: #9C27B0; color: #fff">' + '<div class="row">' + '<div width="20%" class="mdl-cell col-xs-12 col-sm-6 col-md-3" style="position: relative; margin: 0;"><p style="font-size: 300%; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">' + lesson + '</p></div>' + '<div width="80%" class="mdl-cell col-xs-12 col-sm-6 col-md-3"><h4>' + representation_type + '</h4></br><p>' + text + '</div>' + '</div>' + '</div>')
+                                }else{
+                                  $("#representations").append('<div class="card card-block" style="height: 10%; background-color: #9C27B0; color: #fff">' + '<div class="row">' + '<div width="20%" class="mdl-cell col-xs-12 col-sm-6 col-md-3" style="position: relative; margin: 0;"><p style="font-size: 350%; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">' + lesson + '</p></div>' + '<div width="80%" class="mdl-cell col-xs-12 col-sm-6 col-md-3"><h4>' + representation_type + '</h4></br><p>' + text + '</div>' + '</div>' + '</div>')
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      })
+    </script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap/bootstrap.min.js"></script>
+    <script src="https://cdn.rawgit.com/HubSpot/tether/v1.3.4/dist/js/tether.min.js"></script>
+    <script src="https://cdn.rawgit.com/FezVrasta/bootstrap-material-design/dist/dist/bootstrap-material-design.iife.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="https://maxcdn.bootstrapcdn.com/js/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>

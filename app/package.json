@@ -6,11 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Marcel Radzio <info@nordgedanken.de>",
   "license": "",
   "window": {
-    "title": "NW.js demo",
-    "icon": "link.png",
+    "title": "Lornsenschule Vertretungsplan",
+    "icon": "LS.ico",
     "toolbar": true,
     "frame": true,
     "width": 800,
@@ -18,9 +18,6 @@
     "position": "center",
     "min_width": 400,
     "min_height": 200
-  },
-  "webkit": {
-    "plugin": true
   },
   "dependencies": {
     "request": "^2.69.0"

@@ -2,7 +2,8 @@ var NwBuilder = require('nw-builder');
 var nw = new NwBuilder({
     files: './app/**', // use the glob format
     platforms: ['win', 'linux'],
-    version: 'v0.12.3'
+    version: 'latest',
+    winIco: 'LS.ico'
 });
 
 //Log stuff you want
