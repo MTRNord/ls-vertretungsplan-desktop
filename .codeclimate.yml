@@ -1,0 +1,20 @@
+---
+engines:
+  fixme:
+    enabled: true
+  csslint:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - javascript
+  nodesecurity:
+    enabled: true
+  fixme:
+    enabled: true
+ratings:
+  paths: []
+exclude_paths: 
+- "app/js/**"
+- "app/css/**"
