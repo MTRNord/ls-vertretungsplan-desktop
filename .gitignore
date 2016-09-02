@@ -25,6 +25,7 @@ build/Release
 build
 prebuild
 cache
+dist
 
 # Dependency directory
 node_modules
@@ -34,4 +35,3 @@ node_modules
 
 # Optional REPL history
 .node_repl_history
-LS.ico
