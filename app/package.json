@@ -1,11 +1,12 @@
 {
   "name": "ls_vertretungsplan_desktop",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Eine Anwendung die den Vertretungsplan auf dem Desktop anzeigt",
   "main": "./main.js",
   "author": "Marcel Radzio <info@nordgedanken.de>",
   "license": "",
   "dependencies": {
+    "cached-request": "^1.0.0",
     "request": "^2.69.0"
   }
 }
