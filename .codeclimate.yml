@@ -11,6 +11,8 @@ engines:
       - javascript
   fixme:
     enabled: true
+  nodesecurity:
+    enabled: true
 ratings:
   paths:
   - app/**
