@@ -1,6 +1,6 @@
 {
   "name": "ls_vertretungsplan_desktop",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Eine Anwendung die den Vertretungsplan auf dem Desktop anzeigt",
   "author": "Marcel Radzio <info@nordgedanken.de>",
   "license": "",
@@ -34,7 +34,7 @@
     },
     "win": {
       "iconUrl": "https://github.com/MTRNord/ls-vertretungsplan-desktop/tree/master/app/LS.ico?raw=true",
-      "remoteReleases": "https://github.com/MTRNord/ls-vertretungsplan-desktop"
+      "icon": "app/LS.ico"
     },
     "linux": {
       "target": [

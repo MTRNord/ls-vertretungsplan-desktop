@@ -1,13 +1,14 @@
 {
   "name": "ls_vertretungsplan_desktop",
   "productName": "Lornsenschule Vertretungsplan",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Eine Anwendung die den Vertretungsplan auf dem Desktop anzeigt",
   "main": "./main.js",
-  "author": "Marcel Radzio <info@nordgedanken.de>",
+  "author": "Lornsenschule Vertretungsplan",
   "license": "",
   "dependencies": {
     "cached-request": "^1.0.0",
+    "electron-squirrel-startup": "^1.0.0",
     "request": "^2.69.0"
   },
   "homepage": "https://github.com/MTRNord/ls-vertretungsplan-desktop"
