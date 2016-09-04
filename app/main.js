@@ -9,18 +9,35 @@ let win
 function update () {
   console.warn("Starting Autoupdater")
   console.warn(app.getVersion())
-  var feedUrl = 'https://ls-desktop.herokuapp.com/update/' + os.platform() + '/' + app.getVersion() + '/';
+  var feedUrl = 'http://ls-desktop.herokuapp.com/update/' + os.platform() + '/' + app.getVersion() + '/';
   autoUpdater.setFeedURL(feedUrl);
 
-  autoUpdater.checkForUpdates()
+  console.log('created');
+  autoUpdater.on('checking-for-update', function() {
+      console.log("checking-for-update");
+  });
+
+  autoUpdater.on('update-available', function() {
+      console.log("update-available");
+  });
+
+  autoUpdater.on('update-not-available', function() {
+      console.log("update-not-available");
+  });
+
+  autoUpdater.on('update-downloaded', function() {
+      console.log(" update-downloaded");
+  });
+
+  setTimeout(function() {autoUpdater.checkForUpdates()}, 10000);
 
   autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateUrl, quitAndUpdate) {
 
-    var index = dialog.showMessageBox(mainWindow, {
+    var index = dialog.showMessageBox({
       type: 'info',
       buttons: ['Restart', 'Later'],
       title: "Lornsenschule Vertretungsplan",
-      message: i18n.__('The new version has been downloaded. Please restart the application to apply the updates.'),
+      message: ('The new version has been downloaded. Please restart the application to apply the updates.'),
       detail: releaseName + "\n\n" + releaseNotes
     });
 
@@ -28,7 +45,7 @@ function update () {
       return;
     }
 
-    autoUpdater.quitAndUpdate();
+    quitAndUpdate()
   });
 }
 
