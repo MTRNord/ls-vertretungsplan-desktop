@@ -1,19 +1,25 @@
-const {app, BrowserWindow, dialog} = require('electron')
+const {app, BrowserWindow, dialog, globalShortcut} = require('electron')
+const autoUpdater = require('electron').autoUpdater
+const os = require("os")
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
 
 function update () {
-  var feedUrl = 'https://ls-desktop.herokuapp.com/update/win32/' + app.getVersion();
+  console.warn("Starting Autoupdater")
+  console.warn(app.getVersion())
+  var feedUrl = 'https://ls-desktop.herokuapp.com/update/' + os.platform() + '/' + app.getVersion() + '/';
   autoUpdater.setFeedURL(feedUrl);
+
+  autoUpdater.checkForUpdates()
 
   autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateUrl, quitAndUpdate) {
 
     var index = dialog.showMessageBox(mainWindow, {
       type: 'info',
-      buttons: [i18n.__('Restart'), i18n.__('Later')],
-      title: "Typetalk",
+      buttons: ['Restart', 'Later'],
+      title: "Lornsenschule Vertretungsplan",
       message: i18n.__('The new version has been downloaded. Please restart the application to apply the updates.'),
       detail: releaseName + "\n\n" + releaseNotes
     });
@@ -22,7 +28,7 @@ function update () {
       return;
     }
 
-    quitAndUpdate();
+    autoUpdater.quitAndUpdate();
   });
 }
 
@@ -33,7 +39,6 @@ function createWindow () {
   // and load the index.html of the app.
   win.loadURL(`file://${__dirname}/index.html`)
 
-  // Open the DevTools.
   //win.webContents.openDevTools()
 
   // Emitted when the window is closed.
@@ -43,6 +48,7 @@ function createWindow () {
     // when you should delete the corresponding element.
     win = null
   })
+  update()
 }
 
 // This method will be called when Electron has finished
@@ -65,7 +71,6 @@ app.on('activate', () => {
   if (win === null) {
     createWindow()
   }
-  update();
 })
 
 // In this file you can include the rest of your app's specific main process
