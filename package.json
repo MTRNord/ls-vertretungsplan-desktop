@@ -40,7 +40,6 @@
     "linux": {
       "target": [
         "deb",
-        "AppImage",
         "zip",
         "rpm"
       ]

@@ -1,4 +1,6 @@
-const {app, BrowserWindow, dialog, autoUpdater, globalShortcut} = require('electron')
+const {app, BrowserWindow, dialog, globalShortcut} = require('electron')
+const autoUpdater = require('electron').autoUpdater
+const os = require("os")
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -6,7 +8,8 @@ let win
 
 function update () {
   console.warn("Starting Autoupdater")
-  var feedUrl = 'https://ls-desktop.herokuapp.com/update/win/' + app.getVersion();
+  console.warn(app.getVersion())
+  var feedUrl = 'https://ls-desktop.herokuapp.com/update/' + os.platform() + '/' + app.getVersion() + '/';
   autoUpdater.setFeedURL(feedUrl);
 
   autoUpdater.checkForUpdates()
