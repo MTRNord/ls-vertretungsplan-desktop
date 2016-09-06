@@ -1,6 +1,6 @@
 {
   "name": "ls_vertretungsplan_desktop",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Eine Anwendung die den Vertretungsplan auf dem Desktop anzeigt",
   "author": "Marcel Radzio",
   "license": "",
@@ -34,14 +34,14 @@
     },
     "win": {
       "iconUrl": "https://github.com/MTRNord/ls-vertretungsplan-desktop/tree/master/app/LS.ico?raw=true",
-      "remoteReleases": "http://ls-desktop.herokuapp.com/download/0.1.0/",
+      "remoteReleases": "http://ls-desktop.herokuapp.com/download/0.1.1/",
       "icon": "app/LS.ico"
     },
     "linux": {
       "target": [
         "deb",
         "zip",
-        "rpm"
+        "AppImage"
       ]
     }
   }

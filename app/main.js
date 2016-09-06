@@ -1,52 +1,64 @@
-const {app, BrowserWindow, dialog, globalShortcut} = require('electron')
+const {app, BrowserWindow, dialog, globalShortcut, Tray} = require('electron')
 const autoUpdater = require('electron').autoUpdater
 const os = require("os")
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
+let tray
 
 function update () {
-  console.warn("Starting Autoupdater")
-  console.warn(app.getVersion())
-  var feedUrl = 'http://ls-desktop.herokuapp.com/update/' + os.platform() + '/' + app.getVersion() + '/';
-  autoUpdater.setFeedURL(feedUrl);
+  app.on('ready', () => {
+    console.warn("Starting Autoupdater")
+    console.warn(app.getVersion())
+    var feedUrl = 'http://ls-desktop.herokuapp.com/update/' + os.platform() + '/' + app.getVersion() + '/';
+    autoUpdater.setFeedURL(feedUrl);
 
-  console.log('created');
-  autoUpdater.on('checking-for-update', function() {
-      console.log("checking-for-update");
-  });
+    tray = new Tray(__dirname + '/LS.png')
+    console.log(__dirname + '/LS.png')
 
-  autoUpdater.on('update-available', function() {
-      console.log("update-available");
-  });
-
-  autoUpdater.on('update-not-available', function() {
-      console.log("update-not-available");
-  });
-
-  autoUpdater.on('update-downloaded', function() {
-      console.log(" update-downloaded");
-  });
-
-  setTimeout(function() {autoUpdater.checkForUpdates()}, 10000);
-
-  autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateUrl, quitAndUpdate) {
-
-    var index = dialog.showMessageBox({
-      type: 'info',
-      buttons: ['Restart', 'Later'],
-      title: "Lornsenschule Vertretungsplan",
-      message: ('The new version has been downloaded. Please restart the application to apply the updates.'),
-      detail: releaseName + "\n\n" + releaseNotes
+    console.log('created');
+    autoUpdater.on('checking-for-update', function() {
+      tray.displayBalloon({
+        title: 'Autoupdater',
+        content: 'Es wird nach Updates geprüft!'
+      })
     });
 
-    if (index === 1) {
-      return;
-    }
+    autoUpdater.on('update-available', function() {
+        console.log("update-available");
+    });
 
-    quitAndUpdate()
-  });
+    autoUpdater.on('update-not-available', function() {
+      tray.displayBalloon({
+        title: 'Autoupdater',
+        content: 'Es wird nach Updates geprüft!'
+      })
+    });
+
+    autoUpdater.on('update-downloaded', function() {
+        console.log(" update-downloaded");
+    });
+
+    setTimeout(function() {autoUpdater.checkForUpdates()}, 10000);
+
+    autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateUrl, quitAndUpdate) {
+
+      var index = dialog.showMessageBox({
+        type: 'info',
+        buttons: ['Restart', 'Later'],
+        title: "Lornsenschule Vertretungsplan",
+        message: ('The new version has been downloaded. Please restart the application to apply the updates.'),
+        detail: releaseName + "\n\n" + releaseNotes
+      });
+
+      if (index === 1) {
+        return;
+      }
+
+      quitAndUpdate()
+    });
+  })
 }
 
 function createWindow () {

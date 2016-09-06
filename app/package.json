@@ -1,7 +1,7 @@
 {
   "name": "ls_vertretungsplan_desktop",
   "productName": "Lornsenschule Vertretungsplan",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Eine Anwendung die den Vertretungsplan auf dem Desktop anzeigt",
   "main": "./main.js",
   "author": { 
