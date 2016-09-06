@@ -10,6 +10,7 @@ This Desktop App uses an API by @johan12345 that is NOT managed by me. I am allo
 # How to Build
 
 1. Clone the Repository
-2. Run `npm install`
-3. If You use Windows run `build.cmd` otherwise go to 4
-4. Everybody else go into the app directory and run `npm install` and now run `build` in the root
+2. Run `npm install` in the app directory
+3. Run `npm install` in the root directory of the git
+4. Run `npm install electron-builder -g`
+5. Run `build` in the root directory
