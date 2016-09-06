@@ -4,21 +4,22 @@
   "version": "0.1.2",
   "description": "Eine Anwendung die den Vertretungsplan auf dem Desktop anzeigt",
   "main": "./main.js",
-  "author": { 
-    "name" : "Lornsenschule Vertretungsplan",
-    "email" : "ínfo@nordgedanken.de",
-    "url" : "https://github.com/MTRNord/ls-vertretungsplan-desktop"
+  "author": {
+    "name": "Lornsenschule Vertretungsplan",
+    "email": "ínfo@nordgedanken.de",
+    "url": "https://github.com/MTRNord/ls-vertretungsplan-desktop"
   },
   "contributors": [
     {
-      "name" : "Marcel Radzio",
-      "email" : "ínfo@nordgedanken.de",
-      "url" : "https://github.com/MTRNord/ls-vertretungsplan-desktop"
+      "name": "Marcel Radzio",
+      "email": "ínfo@nordgedanken.de",
+      "url": "https://github.com/MTRNord/ls-vertretungsplan-desktop"
     }
   ],
   "license": "",
   "dependencies": {
     "cached-request": "^1.0.0",
+    "electron-config": "^0.2.1",
     "electron-squirrel-startup": "^1.0.0",
     "request": "^2.69.0"
   },
