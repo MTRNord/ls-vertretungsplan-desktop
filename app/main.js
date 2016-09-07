@@ -1,6 +1,7 @@
 const {app, BrowserWindow, dialog, globalShortcut, Tray} = require('electron')
 const autoUpdater = require('electron').autoUpdater
 const os = require("os")
+const offline = require('offline');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -77,7 +78,9 @@ function createWindow () {
     // when you should delete the corresponding element.
     win = null
   })
-  update()
+  if (!offline()) {
+    update()
+  }
 }
 
 // This method will be called when Electron has finished
