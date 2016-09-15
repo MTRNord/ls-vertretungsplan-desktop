@@ -72,6 +72,13 @@ function createWindow () {
 
   var contextMenu = Menu.buildFromTemplate([
     {
+      label: 'Refresh Data',
+      accelerator: 'Command+R',
+      click: function() {
+        win.reload();
+      }
+    },
+    {
       label: 'Toggle DevTools',
       accelerator: 'Alt+Command+I',
       click: function() {
@@ -79,7 +86,8 @@ function createWindow () {
         win.toggleDevTools();
       }
     },
-    { label: 'Quit',
+    {
+      label: 'Quit',
       accelerator: 'Command+Q',
       selector: 'terminate:',
       click: function() {
