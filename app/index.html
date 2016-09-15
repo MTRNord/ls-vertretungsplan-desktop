@@ -23,20 +23,20 @@
           </ul>
 
           <div class="tab-content">
-            <div class="tab-pane fade in active" id="vertretungen"><div id="days" day="0"></div><div id="days" day="1"></div></div>
+            <div class="tab-pane fade in active" id="vertretungen">
+              <select id="classes" class="custom-select">
+              </select>
+              <div id="days" day="0">
+              </div>
+              <div id="days" day="1">
+              </div>
+            </div>
             <div class="tab-pane fade" id="messages"></div>
           </div>
         </div>
       </main>
     </div>
-    <script>
-      start = new Date();
-    </script>
     <script src="./js/internal/index.js"></script>
-    <script>
-      end = new Date() - start;
-      console.info("Execution time: %dms", end);
-    </script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js" integrity="sha384-ux8v3A6CPtOTqOzMKiuo3d/DomGaaClxFYdCu2HPMBEkf6x2xiDyJ7gkXU0MWwaD" crossorigin="anonymous"></script>

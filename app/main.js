@@ -1,12 +1,14 @@
-const {app, BrowserWindow, dialog, globalShortcut, Tray, ipcMain} = require('electron')
+const {app, BrowserWindow, dialog, globalShortcut, Tray, Menu} = require('electron')
 const autoUpdater = require('electron').autoUpdater
 const os = require("os")
+const path = require('path');
+const iconPath = path.join(__dirname, 'LS.png');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
 let tray
-let onlineStatusWindow
+let appIcon = null
 
 function update () {
   app.on('ready', () => {
@@ -14,9 +16,6 @@ function update () {
     console.warn(app.getVersion())
     var feedUrl = 'http://ls-desktop.herokuapp.com/update/' + os.platform() + '/' + app.getVersion() + '/';
     autoUpdater.setFeedURL(feedUrl);
-
-    tray = new Tray(__dirname + '/LS.png')
-    console.log(__dirname + '/LS.png')
 
     console.log('created');
     autoUpdater.on('checking-for-update', function() {
@@ -69,10 +68,39 @@ function createWindow () {
   // and load the index.html of the app.
   win.loadURL(`file://${__dirname}/index.html`)
 
-  onlineStatusWindow = new BrowserWindow({ width: 0, height: 0, show: false })
-  onlineStatusWindow.loadURL(`file://${__dirname}/online-status.html`)
+  //win.webContents.openDevTools()
 
-  win.webContents.openDevTools()
+  var contextMenu = Menu.buildFromTemplate([
+    {
+      label: 'Toggle DevTools',
+      accelerator: 'Alt+Command+I',
+      click: function() {
+        win.show();
+        win.toggleDevTools();
+      }
+    },
+    { label: 'Quit',
+      accelerator: 'Command+Q',
+      selector: 'terminate:',
+      click: function() {
+        if (process.platform !== 'darwin') {
+          app.quit()
+        }
+      }
+    }
+  ]);
+
+  tray = new Tray(iconPath)
+  tray.setToolTip('Lornsenschule Schleswig Vertretungsplan')
+  tray.setContextMenu(contextMenu);
+
+  win.on('show', () => {
+    tray.setHighlightMode('always')
+  })
+
+  tray.on('click', () => {
+    win.isVisible() ? win.hide() : win.show()
+  })
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -81,11 +109,8 @@ function createWindow () {
     // when you should delete the corresponding element.
     win = null
   })
-  ipcMain.on('online-status-changed', (event, status) => {
-    if (status === "online") {
-      update()
-    }
-  })
+
+  update()
 }
 
 // This method will be called when Electron has finished
