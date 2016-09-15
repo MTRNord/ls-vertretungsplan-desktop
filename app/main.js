@@ -63,7 +63,7 @@ function update () {
 
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({width: 800, height: 600, icon: __dirname + '/LS.ico', title: 'Lornsenschule Vertretungsplan'})
+  win = new BrowserWindow({width: 1000, height: 800, icon: __dirname + '/LS.ico', title: 'Lornsenschule Vertretungsplan'})
 
   // and load the index.html of the app.
   win.loadURL(`file://${__dirname}/index.html`)
@@ -83,6 +83,7 @@ function createWindow () {
       accelerator: 'Command+Q',
       selector: 'terminate:',
       click: function() {
+        app.isQuiting = true
         if (process.platform !== 'darwin') {
           app.quit()
         }
@@ -109,6 +110,19 @@ function createWindow () {
     // when you should delete the corresponding element.
     win = null
   })
+
+  win.on('minimize',function(event){
+      event.preventDefault()
+          win.hide();
+  });
+
+  win.on('close', function (event) {
+      if( !app.isQuiting){
+          event.preventDefault()
+          win.hide();
+      }
+      return false;
+  });
 
   update()
 }
@@ -156,6 +170,7 @@ var handleStartupEvent = function() {
       //   explorer context menus
 
       // Always quit when done
+      app.isQuiting = true
       app.quit();
 
       return true;
@@ -164,6 +179,7 @@ var handleStartupEvent = function() {
       // --squirrel-updated handlers
 
       // Always quit when done
+      app.isQuiting = true
       app.quit();
 
       return true;
@@ -171,6 +187,7 @@ var handleStartupEvent = function() {
       // This is called on the outgoing version of your app before
       // we update to the new version - it's the opposite of
       // --squirrel-updated
+      app.isQuiting = true
       app.quit();
       return true;
   }
