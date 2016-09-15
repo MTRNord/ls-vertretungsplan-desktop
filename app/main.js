@@ -1,12 +1,12 @@
-const {app, BrowserWindow, dialog, globalShortcut, Tray} = require('electron')
+const {app, BrowserWindow, dialog, globalShortcut, Tray, ipcMain} = require('electron')
 const autoUpdater = require('electron').autoUpdater
 const os = require("os")
-const offline = require('offline');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
 let tray
+let onlineStatusWindow
 
 function update () {
   app.on('ready', () => {
@@ -69,7 +69,10 @@ function createWindow () {
   // and load the index.html of the app.
   win.loadURL(`file://${__dirname}/index.html`)
 
-  //win.webContents.openDevTools()
+  onlineStatusWindow = new BrowserWindow({ width: 0, height: 0, show: false })
+  onlineStatusWindow.loadURL(`file://${__dirname}/online-status.html`)
+
+  win.webContents.openDevTools()
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -78,9 +81,11 @@ function createWindow () {
     // when you should delete the corresponding element.
     win = null
   })
-  if (!offline()) {
-    update()
-  }
+  ipcMain.on('online-status-changed', (event, status) => {
+    if (status === "online") {
+      update()
+    }
+  })
 }
 
 // This method will be called when Electron has finished
