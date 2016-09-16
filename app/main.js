@@ -107,14 +107,14 @@ function createWindow () {
       submenu: [
         {
           label: 'Refresh Data',
-          accelerator: 'Command+R',
+          accelerator: 'Ctrl+R',
           click: function() {
             win.reload();
           }
         },
         {
           label: 'Toggle DevTools',
-          accelerator: 'Alt+Command+I',
+          accelerator: 'Alt+Ctrl+I',
           click: function() {
             win.show();
             win.toggleDevTools();
@@ -122,7 +122,7 @@ function createWindow () {
         },
         {
           label: 'Quit',
-          accelerator: 'Command+Q',
+          accelerator: 'Ctrl+Q',
           click: function() {
             app.isQuiting = true
             if (process.platform !== 'darwin') {
