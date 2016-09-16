@@ -34,6 +34,7 @@
     },
     "win": {
       "iconUrl": "https://github.com/MTRNord/ls-vertretungsplan-desktop/tree/master/app/LS.ico?raw=true",
+      "remoteReleases": "http://ls-desktop.herokuapp.com/download/0.1.1/",
       "icon": "app/LS.ico"
     },
     "linux": {

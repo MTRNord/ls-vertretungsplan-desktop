@@ -50,10 +50,9 @@ request({
       })
     })
 
-    _.find(body, function (key) {
-      console.log(key["additionalInfos"])
-      InfosTitle = key["additionalInfos"][0]["title"]
-      InfosText = key["additionalInfos"][0]["text"]
+    _.find(body.additionalInfos, function (key) {
+      InfosTitle = key["title"]
+      InfosText = key["text"]
       $("#messages").append('<h2 id="additionalInfos">' + InfosTitle + '</h2>')
       $("#messages").append('<div class="card card-block" style="height: 10%; background-color: #EEEEEE; color: #000"><p>' + InfosText + '</p></div>')
     })
