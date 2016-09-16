@@ -8,57 +8,60 @@ const iconPath = path.join(__dirname, 'LS.png');
 // be closed automatically when the JavaScript object is garbage collected.
 let win
 let tray
-let appIcon = null
+let menu
+let appIcon
 
 function update () {
-  app.on('ready', () => {
-    console.warn("Starting Autoupdater")
-    console.warn(app.getVersion())
-    var feedUrl = 'http://ls-desktop.herokuapp.com/update/' + os.platform() + '/' + app.getVersion() + '/';
-    autoUpdater.setFeedURL(feedUrl);
+  console.warn("Starting Autoupdater")
+  console.warn(app.getVersion())
+  var feedUrl = 'http://ls-desktop.herokuapp.com/update/' + os.platform() + '/' + app.getVersion() + '/';
+  autoUpdater.setFeedURL(feedUrl);
 
-    console.log('created');
-    autoUpdater.on('checking-for-update', function() {
+  console.log('created');
+  autoUpdater.on('checking-for-update', function() {
+    tray.displayBalloon({
+      title: 'Autoupdater',
+      content: 'Es wird nach Updates geprüft!'
+    })
+  });
+
+  autoUpdater.on('update-available', function() {
+      console.log("update-available");
       tray.displayBalloon({
         title: 'Autoupdater',
-        content: 'Es wird nach Updates geprüft!'
+        content: 'Es gibt ein Update!'
       })
+  });
+
+  autoUpdater.on('update-not-available', function() {
+    tray.displayBalloon({
+      title: 'Autoupdater',
+      content: 'Es gibt kein Update!'
+    })
+  });
+
+  autoUpdater.on('update-downloaded', function() {
+      console.log(" update-downloaded");
+  });
+
+  setTimeout(function() {autoUpdater.checkForUpdates()}, 30000);
+
+  autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateUrl, quitAndUpdate) {
+
+    var index = dialog.showMessageBox({
+      type: 'info',
+      buttons: ['Restart', 'Later'],
+      title: "Lornsenschule Vertretungsplan",
+      message: ('The new version has been downloaded. Please restart the application to apply the updates.'),
+      detail: releaseName + "\n\n" + releaseNotes
     });
 
-    autoUpdater.on('update-available', function() {
-        console.log("update-available");
-    });
+    if (index === 1) {
+      return;
+    }
 
-    autoUpdater.on('update-not-available', function() {
-      tray.displayBalloon({
-        title: 'Autoupdater',
-        content: 'Es wird nach Updates geprüft!'
-      })
-    });
-
-    autoUpdater.on('update-downloaded', function() {
-        console.log(" update-downloaded");
-    });
-
-    setTimeout(function() {autoUpdater.checkForUpdates()}, 10000);
-
-    autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateUrl, quitAndUpdate) {
-
-      var index = dialog.showMessageBox({
-        type: 'info',
-        buttons: ['Restart', 'Later'],
-        title: "Lornsenschule Vertretungsplan",
-        message: ('The new version has been downloaded. Please restart the application to apply the updates.'),
-        detail: releaseName + "\n\n" + releaseNotes
-      });
-
-      if (index === 1) {
-        return;
-      }
-
-      quitAndUpdate()
-    });
-  })
+    quitAndUpdate()
+  });
 }
 
 function createWindow () {
@@ -70,7 +73,7 @@ function createWindow () {
 
   //win.webContents.openDevTools()
 
-  var contextMenu = Menu.buildFromTemplate([
+  var trayMenu = Menu.buildFromTemplate([
     {
       label: 'Refresh Data',
       accelerator: 'Command+R',
@@ -89,7 +92,6 @@ function createWindow () {
     {
       label: 'Quit',
       accelerator: 'Command+Q',
-      selector: 'terminate:',
       click: function() {
         app.isQuiting = true
         if (process.platform !== 'darwin') {
@@ -98,10 +100,42 @@ function createWindow () {
       }
     }
   ]);
-
+  var windowMenu = Menu.buildFromTemplate([
+    {
+      label: 'Datei',
+      submenu: [
+        {
+          label: 'Refresh Data',
+          accelerator: 'Command+R',
+          click: function() {
+            win.reload();
+          }
+        },
+        {
+          label: 'Toggle DevTools',
+          accelerator: 'Alt+Command+I',
+          click: function() {
+            win.show();
+            win.toggleDevTools();
+          }
+        },
+        {
+          label: 'Quit',
+          accelerator: 'Command+Q',
+          click: function() {
+            app.isQuiting = true
+            if (process.platform !== 'darwin') {
+              app.quit()
+            }
+          }
+        }
+      ]
+    }
+  ]);
   tray = new Tray(iconPath)
   tray.setToolTip('Lornsenschule Schleswig Vertretungsplan')
-  tray.setContextMenu(contextMenu);
+  win.setMenu(windowMenu);
+  tray.setContextMenu(trayMenu);
 
   win.on('show', () => {
     tray.setHighlightMode('always')
