@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Material Design fonts -->
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css" integrity="sha384-MIwDKRSSImVFAZCVLtU0LMDdON6KVCrZHyVQQj6e8wIEJkW4tvwqXrbMIya1vriY" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.rawgit.com/FezVrasta/bootstrap-material-design/dist/dist/bootstrap-material-design.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap/v4/fonts/Roboto.css">
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap/v4/fonts/MaterialIcons.css">
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap/v4/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap/v4/bootstrap-material-design.min.css">
     <title>Lornsenschule Vertretungsplan</title>
   </head>
   <body>
@@ -24,24 +24,25 @@
 
           <div class="tab-content">
             <div class="tab-pane fade in active" id="vertretungen">
-              <select id="classes" class="custom-select">
+              <br>
+              <select id="classes" class="custom-select form-control">
               </select>
               <div id="days" day="0">
               </div>
               <div id="days" day="1">
               </div>
             </div>
-            <div class="tab-pane fade" id="messages"></div>
+            <div class="tab-pane fade" id="messages"><br></div>
           </div>
         </div>
       </main>
     </div>
     <script src="./js/internal/index.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js" integrity="sha384-ux8v3A6CPtOTqOzMKiuo3d/DomGaaClxFYdCu2HPMBEkf6x2xiDyJ7gkXU0MWwaD" crossorigin="anonymous"></script>
-    <script src="https://cdn.rawgit.com/FezVrasta/bootstrap-material-design/dist/dist/bootstrap-material-design.iife.min.js"></script>
+    <script src="./js/bootstrap/v4/tether.min.js"></script>
+    <script src="./js/bootstrap/v4/bootstrap.min.js"></script>
+    <script src="./js/bootstrap/v4/bootstrap-material-design.iife.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="https://maxcdn.bootstrapcdn.com/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="./js/bootstrap/v4/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>

@@ -3,6 +3,7 @@ const autoUpdater = require('electron').autoUpdater
 const os = require("os")
 const path = require('path');
 const iconPath = path.join(__dirname, 'LS.png');
+const electronLocalshortcut = require('electron-localshortcut');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -76,7 +77,7 @@ function createWindow () {
   var trayMenu = Menu.buildFromTemplate([
     {
       label: 'Refresh Data',
-      accelerator: 'Command+R',
+      accelerator: 'Ctrl+R',
       click: function() {
         win.reload();
       }
@@ -91,7 +92,7 @@ function createWindow () {
     },
     {
       label: 'Quit',
-      accelerator: 'Command+Q',
+      accelerator: 'Ctrl+Q',
       click: function() {
         app.isQuiting = true
         if (process.platform !== 'darwin') {
@@ -132,6 +133,19 @@ function createWindow () {
       ]
     }
   ]);
+  electronLocalshortcut.register(win, 'Ctrl+R', () => {
+    win.reload();
+  });
+  electronLocalshortcut.register(win, 'Alt+Ctrl+I', () => {
+    win.show();
+    win.toggleDevTools();
+  });
+  electronLocalshortcut.register(win, 'Ctrl+Q', () => {
+    app.isQuiting = true
+    if (process.platform !== 'darwin') {
+      app.quit()
+    }
+  });
   tray = new Tray(iconPath)
   tray.setToolTip('Lornsenschule Schleswig Vertretungsplan')
   win.setMenu(windowMenu);
@@ -180,6 +194,7 @@ app.on('window-all-closed', () => {
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
     app.quit()
+    electronLocalshortcut.unregisterAll(win);
   }
 })
 
