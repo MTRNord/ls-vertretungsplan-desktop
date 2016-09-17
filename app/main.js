@@ -1,9 +1,13 @@
-const {app, BrowserWindow, dialog, globalShortcut, Tray, Menu} = require('electron')
+const {app, BrowserWindow, dialog, globalShortcut, Tray, Menu, crashReporter} = require('electron')
 const autoUpdater = require('electron').autoUpdater
 const os = require("os")
 const path = require('path');
 const iconPath = path.join(__dirname, 'LS.png');
 const electronLocalshortcut = require('electron-localshortcut');
+const packageJSON = require('./package.json');
+const deps = packageJSON.dependencies;
+const request = require('request');
+const fs = require('fs')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -12,13 +16,55 @@ let tray
 let menu
 let appIcon
 
+crashReporter.start({
+  productName: 'Lornsenschule Vertretungsplan Desktop',
+  companyName: 'Nordgedanken.de',
+  submitURL: 'https://ls-crash-report-server.herokuapp.com',
+  ignoreSystemCrashHandler: true,
+  autoSubmit: true
+})
+
+function CrashReport(err) {
+  fs.unlink(path.join(__dirname, "..", "..", "error.log"))
+  fs.writeFileSync(path.join(__dirname, "..", "..", "error.log"), err.stack);
+  var options = { method: 'POST',
+  url: 'http://ls-crash-report-server.herokuapp.com/',
+  headers:
+   { 'cache-control': 'no-cache',
+     'content-type': 'multipart/form-data; boundary=---011000010111000001101001' },
+  formData:
+   { ver: deps['electron-prebuilt'],
+     platform: process.platform,
+     process_type: require('electron').remote ? 'renderer' : 'main',
+     _version: packageJSON.version,
+     _productName: packageJSON.productName,
+     prod: 'Electron',
+     _companyName: 'Nordgedanken.de',
+     upload_file_minidump:
+      { value: fs.createReadStream(path.join(__dirname, "..", "..", "error.log")),
+        options: {
+          filename: {
+            '0': {}
+          },
+          contentType: null
+        }
+      }
+    }
+  };
+
+  request(options, function (error, response, body) {
+    if (error) throw new Error(error);
+
+    console.log(body);
+  });
+  fs.unlink(path.join(__dirname, "..", "error.log"))
+}
+
 function update () {
-  console.warn("Starting Autoupdater")
-  console.warn(app.getVersion())
-  var feedUrl = 'http://ls-desktop.herokuapp.com/update/' + os.platform() + '/' + app.getVersion() + '/';
+  var feedUrl = 'http://ls-desktop.herokuapp.com/update/' + os.platform() + '_' + os.arch() + '/' + app.getVersion() + '/';
   autoUpdater.setFeedURL(feedUrl);
 
-  console.log('created');
+  setTimeout(function() {autoUpdater.checkForUpdates()}, 30000);
   autoUpdater.on('checking-for-update', function() {
     tray.displayBalloon({
       title: 'Autoupdater',
@@ -26,8 +72,15 @@ function update () {
     })
   });
 
+  autoUpdater.on("error", (err) => {
+    CrashReport(err)
+    tray.displayBalloon({
+      title: 'Autoupdater',
+      content: 'Ein Fehler ist aufgetreten!'
+    })
+  })
+
   autoUpdater.on('update-available', function() {
-      console.log("update-available");
       tray.displayBalloon({
         title: 'Autoupdater',
         content: 'Es gibt ein Update!'
@@ -41,11 +94,6 @@ function update () {
     })
   });
 
-  autoUpdater.on('update-downloaded', function() {
-      console.log(" update-downloaded");
-  });
-
-  setTimeout(function() {autoUpdater.checkForUpdates()}, 30000);
 
   autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateUrl, quitAndUpdate) {
 
@@ -66,6 +114,9 @@ function update () {
 }
 
 function createWindow () {
+  process.on('uncaughtException', (err) => {
+    CrashReport(err)
+  });
   // Create the browser window.
   win = new BrowserWindow({width: 1000, height: 800, icon: __dirname + '/LS.ico', title: 'Lornsenschule Vertretungsplan'})
 
@@ -225,6 +276,9 @@ var handleStartupEvent = function() {
       // - Add your .exe to the PATH
       // - Write to the registry for things like file associations and
       //   explorer context menus
+
+      fs.unlink("uncaughtException.log")
+      fs.unlink("error.log")
 
       // Always quit when done
       app.isQuiting = true
