@@ -16,48 +16,16 @@ let tray
 let menu
 let appIcon
 
-crashReporter.start({
-  productName: 'Lornsenschule Vertretungsplan Desktop',
-  companyName: 'Nordgedanken.de',
-  submitURL: 'https://ls-crash-report-server.herokuapp.com',
-  ignoreSystemCrashHandler: true,
-  autoSubmit: true
-})
+crashInit()
 
-function CrashReport(err) {
-  fs.unlink(path.join(__dirname, "..", "..", "error.log"))
-  fs.writeFileSync(path.join(__dirname, "..", "..", "error.log"), err.stack);
-  var options = { method: 'POST',
-  url: 'http://ls-crash-report-server.herokuapp.com/',
-  headers:
-   { 'cache-control': 'no-cache',
-     'content-type': 'multipart/form-data; boundary=---011000010111000001101001' },
-  formData:
-   { ver: deps['electron-prebuilt'],
-     platform: process.platform,
-     process_type: require('electron').remote ? 'renderer' : 'main',
-     _version: packageJSON.version,
-     _productName: packageJSON.productName,
-     prod: 'Electron',
-     _companyName: 'Nordgedanken.de',
-     upload_file_minidump:
-      { value: fs.createReadStream(path.join(__dirname, "..", "..", "error.log")),
-        options: {
-          filename: {
-            '0': {}
-          },
-          contentType: null
-        }
-      }
-    }
-  };
-
-  request(options, function (error, response, body) {
-    if (error) throw new Error(error);
-
-    console.log(body);
-  });
-  fs.unlink(path.join(__dirname, "..", "error.log"))
+function crashInit() {
+  crashReporter.start({
+    productName: 'Lornsenschule Vertretungsplan Desktop',
+    companyName: 'Nordgedanken.de',
+    submitURL: 'http://ls-crash-report-server.herokuapp.com',
+    autoSubmit: true
+  })
+  console.log(crashReporter.getLastCrashReport());
 }
 
 function update () {
@@ -73,7 +41,7 @@ function update () {
   });
 
   autoUpdater.on("error", (err) => {
-    CrashReport(err)
+    crashInit()
     tray.displayBalloon({
       title: 'Autoupdater',
       content: 'Ein Fehler ist aufgetreten!'
@@ -115,7 +83,7 @@ function update () {
 
 function createWindow () {
   process.on('uncaughtException', (err) => {
-    CrashReport(err)
+    crashInit()
   });
   // Create the browser window.
   win = new BrowserWindow({width: 1000, height: 800, icon: __dirname + '/LS.ico', title: 'Lornsenschule Vertretungsplan'})
@@ -220,7 +188,7 @@ function createWindow () {
 
   win.on('minimize',function(event){
       event.preventDefault()
-          win.hide();
+      win.hide();
   });
 
   win.on('close', function (event) {
@@ -243,6 +211,7 @@ app.on('ready', createWindow)
 app.on('window-all-closed', () => {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
+  app.isQuiting = true
   if (process.platform !== 'darwin') {
     app.quit()
     electronLocalshortcut.unregisterAll(win);

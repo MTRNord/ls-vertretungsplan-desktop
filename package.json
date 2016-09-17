@@ -1,6 +1,6 @@
 {
   "name": "ls_vertretungsplan_desktop",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Eine Anwendung die den Vertretungsplan auf dem Desktop anzeigt",
   "author": "Marcel Radzio",
   "license": "",
@@ -14,7 +14,7 @@
     "release": "build"
   },
   "build": {
-    "asar": true,
+    "asar": false,
     "appId": "de.nordgedanken.ls_vertretungsplan_desktop",
     "category": "public.app-category.education",
     "dmg": {

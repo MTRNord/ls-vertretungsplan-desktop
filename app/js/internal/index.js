@@ -1,8 +1,7 @@
 console.time('RenderData');
-function reloadPage() {
-  var remote = require('electron').remote
-  remote.getCurrentWindow().reload()
-}
+const Config = require('electron-config');
+const config = new Config();
+
 window.$ = window.jQuery = require('./js/jquery-3.1.0.min.js');
 _ = require('lodash');
 var request = require('request')
@@ -38,7 +37,11 @@ request({
         })
       })
     })
-    $('#classes option:contains("Alle")').prop('selected',true);
+    if (config.get('class')) {
+      $('#classes option:contains("' + config.get('class') + '")').prop('selected',true);
+    }else {
+      $('#classes option:contains("Alle")').prop('selected',true);
+    }
     render()
 
     _.find(body.days, function (key) {
@@ -69,6 +72,7 @@ request({
         messages = key["messages"]
         day = key
         selected_class = $( "#classes option:selected" ).text();
+        config.set('class', selected_class);
         $("div").filter("[day='" + _.indexOf(body.days, day) + "']", "#days").empty();
         $("div").filter("[day='" + _.indexOf(body.days, day) + "']", "#days").append('<h2 id="date" date="' + date + '">' + date + '</h2>')
         _.find(substitutions, function (key) {
