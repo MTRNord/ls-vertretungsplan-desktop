@@ -46,6 +46,7 @@ function update () {
       title: 'Autoupdater',
       content: 'Ein Fehler ist aufgetreten!'
     })
+    process.crash()
   })
 
   autoUpdater.on('update-available', function() {

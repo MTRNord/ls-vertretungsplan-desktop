@@ -25,17 +25,9 @@ request({
     $("#classes").append('<option>Alle</option>')
     _.find(body.classes, function (key) {
       alle_klassen = key
-      _.find(body.days, function (key) {
-        substitutions = key["substitutions"]
-        _.find(substitutions, function (key) {
-          klassen = key["classes"]
-          if (_.includes(klassen, alle_klassen)) {
-            if ($('#classes option:contains(' + alle_klassen + ')').length == 0) {
-              $("#classes").append('<option>' + alle_klassen + '</option>')
-            }else{}
-          }
-        })
-      })
+      if ($('#classes option:contains(' + alle_klassen + ')').length == 0) {
+        $("#classes").append('<option>' + alle_klassen + '</option>')
+      }else{}
     })
     if (config.get('class')) {
       $('#classes option:contains("' + config.get('class') + '")').prop('selected',true);
