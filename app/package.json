@@ -22,7 +22,7 @@
     "electron-localshortcut": "^0.6.1",
     "electron-squirrel-startup": "^1.0.0",
     "lodash": "^4.15.0",
-    "request": "^2.69.0"
+    "request": "^2.78.0"
   },
   "homepage": "https://github.com/MTRNord/ls-vertretungsplan-desktop"
 }

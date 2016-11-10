@@ -5,17 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Material Design fonts -->
-    <link rel="stylesheet" type="text/css" href="./css/bootstrap/v4/fonts/Roboto.css">
-    <link rel="stylesheet" type="text/css" href="./css/bootstrap/v4/fonts/MaterialIcons.css">
-    <link rel="stylesheet" type="text/css" href="./css/bootstrap/v4/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="./css/bootstrap/v4/bootstrap-material-design.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap/v4/fonts/Roboto.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap/v4/fonts/MaterialIcons.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap/v4/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap/v4/bootstrap-material-design.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/internal/selection.css">
     <title>Lornsenschule Vertretungsplan</title>
   </head>
   <body>
       <div class="bmd-layout-container" id="Main">
       <main class="bmd-layout-content">
-        <div class="container">
-          <h1 id="school"></h1></br>
+        <nav class="navbar navbar-light bg-faded navbar-fixed-top">
+          <h3 id="school" class="navbar-brand"></h3>
+        </nav>
+        <div class="container" style="padding-top: 70px;">
+          <!--<h2 id="school"></h2></br>
+          <header class="bmd-layout-header"><h2 id="school"></h2></header></br>-->
 
           <ul class="nav nav-tabs" id="Tabs">
             <li class="nav-item"><a class="nav-link active" data-target="#vertretungen" data-toggle="tab">Vertretungen</a></li>
@@ -40,13 +45,14 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <!-- Insert this line above script imports  -->
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-    <script src="./js/jquery-3.1.0.min.js"></script>
-    <script src="./js/bootstrap/v4/tether.min.js"></script>
-    <script src="./js/bootstrap/v4/bootstrap.min.js"></script>
-    <script src="./js/bootstrap/v4/bootstrap-material-design.iife.min.js"></script>
+    <script src="../js/jquery-2.2.4.min.js"></script>
+    <script src="../js/jquery.mobile.custom.min.js"></script>
+    <script src="../js/bootstrap/v4/tether.min.js"></script>
+    <script src="../js/bootstrap/v4/bootstrap.min.js"></script>
+    <script src="../js/bootstrap/v4/bootstrap-material-design.iife.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="./js/bootstrap/v4/ie10-viewport-bug-workaround.js"></script>
+    <script src="../js/bootstrap/v4/ie10-viewport-bug-workaround.js"></script>
     <script>if (window.module) module = window.module;</script>
-    <script src="./js/internal/index.js"></script>
+    <script src="../js/internal/index.js"></script>
   </body>
 </html>

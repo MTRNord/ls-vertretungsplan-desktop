@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Material Design fonts -->
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap/v4/fonts/Roboto.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap/v4/fonts/MaterialIcons.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap/v4/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap/v4/bootstrap-material-design.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/internal/selection.css">
+    <title>About - Lornsenschule Vertretungsplan</title>
+  </head>
+  <body>
+      <div class="bmd-layout-container" id="Main">
+      <main class="bmd-layout-content">
+        <nav class="navbar navbar-light bg-faded navbar-fixed-top">
+          <h3 id="about"  class="navbar-brand">Über</h3>
+        </nav>
+        <div class="container" style="padding-top: 70px;">
+          <!--<header class="bmd-layout-header"><h2 id="about">Über</h2></header>
+          <h1 id="about">Über</h1>-->
+
+          <div id="UpdaterStatus"></div>
+        </div>
+      </main>
+    </div>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- Insert this line above script imports  -->
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script src="../js/jquery-2.2.4.min.js"></script>
+    <script src="../js/bootstrap/v4/tether.min.js"></script>
+    <script src="../js/bootstrap/v4/bootstrap.min.js"></script>
+    <script src="../js/bootstrap/v4/bootstrap-material-design.iife.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/bootstrap/v4/ie10-viewport-bug-workaround.js"></script>
+    <script>if (window.module) module = window.module;</script>
+    <script>
+      console.time('RenderData');
+      const {ipcRenderer} = require('electron')
+      const Config = require('electron-config');
+      const config = new Config();
+
+      //jQuery = window.$ = window.jQuery = require('./js/jquery-3.1.0.min.js');
+      _ = require('lodash');
+
+      $("div#UpdaterStatus").empty();
+      ipcRenderer.send('AutoUpdater')
+      logo = '<img src="../LS.png" alt="Logo" height="70px" width="70px" style="margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">';
+      ipcRenderer.on('Updater' , function(event , data){
+        $("div#UpdaterStatus").empty();
+        if (data.status == "checking") {
+          $("div#UpdaterStatus").append('<div class="card card-block" style="border-radius: 5px; -webkit-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); -moz-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); position:relative; height: 10%; background-color: #2196F3; color: #fff"><div class="row"><div class="col-md-4" style="position: relative; margin: 0; display: inline-block;">' + logo + '</div><div class="col-md-8" style="position: relative; margin: 0; display: inline-block;"><h4>Update check is running</h4></br><h7></h7></div></div></div>');
+        }
+        if (data.status == "error") {
+          $("div#UpdaterStatus").append('<div class="card card-block" style="border-radius: 5px;  -webkit-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); -moz-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55);  position:relative; height: 10%; background-color: #F44336; color: #fff"><div class="row"><div class="col-md-4" style="position: relative; margin: 0; display: inline-block;">' + logo + '</div><div class="col-md-8" style="position: relative; margin: 0; display: inline-block;"><h4>Update check run into an Error</h4></br><h7></h7></div></div></div>');
+        }
+        if (data.status == "update") {
+          $("div#UpdaterStatus").append('<div class="card card-block" style="border-radius: 5px;  -webkit-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); -moz-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55);  position:relative; height: 10%; background-color: #F44336; color: #fff"><div class="row"><div class="col-md-4" style="position: relative; margin: 0; display: inline-block;">' + logo + '</div><div class="col-md-8" style="position: relative; margin: 0; display: inline-block;" ><h4>New update available</h4></br><h7></h7></div></div></div>');
+        }
+        if (data.status == "no-update") {
+          $("div#UpdaterStatus").append('<div class="card card-block" style="border-radius: 5px;  -webkit-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); -moz-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55);  position:relative; height: 10%; background-color: #F44336; color: #fff"><div class="row"><div class="col-md-4" style="position: relative; margin: 0; display: inline-block;">' + logo + '</div><div class="col-md-8" style="position: relative; margin: 0; display: inline-block;"><h4>No update available</h4></br><h7></h7></div></div></div>');
+        }
+      });
+
+      //_.find(body.classes, function (key) {})
+
+
+      console.timeEnd('RenderData');
+    </script>
+  </body>
+</html>

@@ -5,8 +5,8 @@
   "author": "Marcel Radzio",
   "license": "",
   "devDependencies": {
-    "electron": "*",
-    "electron-builder": "*"
+    "electron": "^1.4.5",
+    "electron-builder": "^7.24.0"
   },
   "scripts": {
     "pack": "build --dir",

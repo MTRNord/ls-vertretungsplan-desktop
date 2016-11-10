@@ -1,4 +1,4 @@
-const {app, BrowserWindow, dialog, globalShortcut, Tray, Menu, crashReporter} = require('electron')
+const {app, BrowserWindow, dialog, globalShortcut, Tray, Menu, crashReporter, ipcMain} = require('electron')
 const autoUpdater = require('electron').autoUpdater
 const os = require("os")
 const path = require('path');
@@ -8,6 +8,7 @@ const packageJSON = require('./package.json');
 const deps = packageJSON.dependencies;
 const request = require('request');
 const fs = require('fs')
+const windowArray = ['win','about'];
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -15,8 +16,6 @@ let win
 let tray
 let menu
 let appIcon
-
-crashInit()
 
 function crashInit() {
   crashReporter.start({
@@ -34,6 +33,7 @@ function update () {
 
   setTimeout(function() {autoUpdater.checkForUpdates()}, 30000);
   autoUpdater.on('checking-for-update', function() {
+    about.webContents.send('Updater' , {status:'checking'});
     tray.displayBalloon({
       title: 'Autoupdater',
       content: 'Es wird nach Updates geprüft!'
@@ -41,15 +41,17 @@ function update () {
   });
 
   autoUpdater.on("error", (err) => {
+    about.webContents.send('Updater' , {status:'error'});
     crashInit()
     tray.displayBalloon({
       title: 'Autoupdater',
       content: 'Ein Fehler ist aufgetreten!'
     })
-    process.crash()
+    //process.crash()
   })
 
   autoUpdater.on('update-available', function() {
+    about.webContents.send('Updater' , {status:'update'});
       tray.displayBalloon({
         title: 'Autoupdater',
         content: 'Es gibt ein Update!'
@@ -57,6 +59,7 @@ function update () {
   });
 
   autoUpdater.on('update-not-available', function() {
+    about.webContents.send('Updater' , {status:'no-update'});
     tray.displayBalloon({
       title: 'Autoupdater',
       content: 'Es gibt kein Update!'
@@ -82,15 +85,44 @@ function update () {
   });
 }
 
-function createWindow () {
+function createWindow_about () {
   process.on('uncaughtException', (err) => {
+    console.log(err);
+    crashInit()
+  });
+  about = new BrowserWindow({width: 790, height: 600, icon: __dirname + '/LS.ico', title: 'About - Lornsenschule Vertretungsplan', show: false, parent: win, resizable: false})
+
+  about.loadURL(`file://${__dirname}/pages/about.html`)
+  electronLocalshortcut.register(about, 'Alt+Ctrl+I', () => {
+    about.show();
+    about.webContents.isDevToolsOpened() ? about.webContents.closeDevTools() : about.webContents.openDevTools()
+  });
+  // Emitted when the window is closed.
+  about.on('closed', () => {
+  })
+
+  ipcMain.on('AutoUpdater', (event, arg) => {
+    autoUpdater.checkForUpdates()
+  })
+
+  about.on('close', function (event) {
+      if( !app.isQuiting){
+          event.preventDefault()
+          about.hide();
+      }
+      return false;
+  });
+}
+
+function createWindow_win () {
+  process.on('uncaughtException', (err) => {
+    console.log(err);
     crashInit()
   });
   // Create the browser window.
   win = new BrowserWindow({width: 1000, height: 800, icon: __dirname + '/LS.ico', title: 'Lornsenschule Vertretungsplan'})
-
   // and load the index.html of the app.
-  win.loadURL(`file://${__dirname}/index.html`)
+  win.loadURL(`file://${__dirname}/pages/index.html`)
 
   //win.webContents.openDevTools()
 
@@ -108,6 +140,13 @@ function createWindow () {
       click: function() {
         win.show();
         win.toggleDevTools();
+      }
+    },
+    {
+      label: 'About',
+      accelerator: 'F1',
+      click: function() {
+        about.show();
       }
     },
     {
@@ -151,6 +190,18 @@ function createWindow () {
           }
         }
       ]
+    },
+    {
+      label: 'Hilfe',
+      submenu: [
+        {
+          label: 'Über',
+          accelerator: 'F1',
+          click: function() {
+            about.show();
+          }
+        }
+      ]
     }
   ]);
   electronLocalshortcut.register(win, 'Ctrl+R', () => {
@@ -159,6 +210,9 @@ function createWindow () {
   electronLocalshortcut.register(win, 'Alt+Ctrl+I', () => {
     win.show();
     win.toggleDevTools();
+  });
+  electronLocalshortcut.register(win, 'F1', () => {
+    about.show();
   });
   electronLocalshortcut.register(win, 'Ctrl+Q', () => {
     app.isQuiting = true
@@ -206,7 +260,10 @@ function createWindow () {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', () => {
+  createWindow_win()
+  createWindow_about()
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -216,6 +273,7 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
     electronLocalshortcut.unregisterAll(win);
+    electronLocalshortcut.unregisterAll(about);
   }
 })
 
@@ -223,7 +281,10 @@ app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (win === null) {
-    createWindow()
+    createWindow_win()
+  }
+  if (about === null) {
+    createWindow_about()
   }
 })
 
