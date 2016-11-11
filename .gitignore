@@ -21,8 +21,7 @@ coverage
 .lock-wscript
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
-build
+build/Releases
 prebuild
 cache
 dist

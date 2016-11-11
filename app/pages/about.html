@@ -22,7 +22,20 @@
           <!--<header class="bmd-layout-header"><h2 id="about">Über</h2></header>
           <h1 id="about">Über</h1>-->
 
-          <div id="UpdaterStatus"></div>
+          <div id="UpdaterStatus">
+            <div onclick="Update();" class="card card-block" style="border-radius: 5px; -webkit-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); -moz-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); position:relative; height: 10%; background-color: #2196F3; color: #fff">
+              <div class="row">
+                <div class="col-md-4" style="position: relative; margin: 0; display: inline-block;">
+                  <img src="../LS.png" alt="Logo" height="70px" width="70px" style="margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                </div>
+                <div class="col-md-8" style="position: relative; margin: 0; display: inline-block;">
+                  <h4>Update check is running</h4>
+                  </br>
+                  <h7></h7>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
     </div>
@@ -45,22 +58,24 @@
       //jQuery = window.$ = window.jQuery = require('./js/jquery-3.1.0.min.js');
       _ = require('lodash');
 
-      $("div#UpdaterStatus").empty();
-      ipcRenderer.send('AutoUpdater')
+      function Update() {
+        ipcRenderer.send('AutoUpdater')
+      }
+
       logo = '<img src="../LS.png" alt="Logo" height="70px" width="70px" style="margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">';
       ipcRenderer.on('Updater' , function(event , data){
         $("div#UpdaterStatus").empty();
         if (data.status == "checking") {
-          $("div#UpdaterStatus").append('<div class="card card-block" style="border-radius: 5px; -webkit-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); -moz-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); position:relative; height: 10%; background-color: #2196F3; color: #fff"><div class="row"><div class="col-md-4" style="position: relative; margin: 0; display: inline-block;">' + logo + '</div><div class="col-md-8" style="position: relative; margin: 0; display: inline-block;"><h4>Update check is running</h4></br><h7></h7></div></div></div>');
+          $("div#UpdaterStatus").append('<div onclick="Update();" class="card card-block" style="border-radius: 5px; -webkit-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); -moz-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); position:relative; height: 10%; background-color: #2196F3; color: #fff"><div class="row"><div class="col-md-4" style="position: relative; margin: 0; display: inline-block;">' + logo + '</div><div class="col-md-8" style="position: relative; margin: 0; display: inline-block;"><h4>Update check is running</h4></br><h7></h7></div></div></div>');
         }
         if (data.status == "error") {
-          $("div#UpdaterStatus").append('<div class="card card-block" style="border-radius: 5px;  -webkit-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); -moz-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55);  position:relative; height: 10%; background-color: #F44336; color: #fff"><div class="row"><div class="col-md-4" style="position: relative; margin: 0; display: inline-block;">' + logo + '</div><div class="col-md-8" style="position: relative; margin: 0; display: inline-block;"><h4>Update check run into an Error</h4></br><h7></h7></div></div></div>');
+          $("div#UpdaterStatus").append('<div onclick="Update();" class="card card-block" style="border-radius: 5px;  -webkit-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); -moz-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55);  position:relative; height: 10%; background-color: #F44336; color: #fff"><div class="row"><div class="col-md-4" style="position: relative; margin: 0; display: inline-block;">' + logo + '</div><div class="col-md-8" style="position: relative; margin: 0; display: inline-block;"><h4>Update check run into an Error</h4></br><h7></h7></div></div></div>');
         }
         if (data.status == "update") {
-          $("div#UpdaterStatus").append('<div class="card card-block" style="border-radius: 5px;  -webkit-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); -moz-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55);  position:relative; height: 10%; background-color: #F44336; color: #fff"><div class="row"><div class="col-md-4" style="position: relative; margin: 0; display: inline-block;">' + logo + '</div><div class="col-md-8" style="position: relative; margin: 0; display: inline-block;" ><h4>New update available</h4></br><h7></h7></div></div></div>');
+          $("div#UpdaterStatus").append('<div onclick="Update();" class="card card-block" style="border-radius: 5px;  -webkit-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); -moz-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55);  position:relative; height: 10%; background-color: #F44336; color: #fff"><div class="row"><div class="col-md-4" style="position: relative; margin: 0; display: inline-block;">' + logo + '</div><div class="col-md-8" style="position: relative; margin: 0; display: inline-block;" ><h4>New update available</h4></br><h7></h7></div></div></div>');
         }
         if (data.status == "no-update") {
-          $("div#UpdaterStatus").append('<div class="card card-block" style="border-radius: 5px;  -webkit-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); -moz-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55);  position:relative; height: 10%; background-color: #F44336; color: #fff"><div class="row"><div class="col-md-4" style="position: relative; margin: 0; display: inline-block;">' + logo + '</div><div class="col-md-8" style="position: relative; margin: 0; display: inline-block;"><h4>No update available</h4></br><h7></h7></div></div></div>');
+          $("div#UpdaterStatus").append('<div onclick="Update();" class="card card-block" style="border-radius: 5px;  -webkit-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); -moz-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55);  position:relative; height: 10%; background-color: #F44336; color: #fff"><div class="row"><div class="col-md-4" style="position: relative; margin: 0; display: inline-block;">' + logo + '</div><div class="col-md-8" style="position: relative; margin: 0; display: inline-block;"><h4>No update available</h4></br><h7></h7></div></div></div>');
         }
       });
 
