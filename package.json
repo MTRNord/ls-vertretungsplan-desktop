@@ -14,6 +14,15 @@
     "release": "build"
   },
   "build": {
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "language": "0407"
+    },
+    "publish": {
+      "provider": "generic",
+      "url": "http://ls-desktop.herokuapp.com/update/"
+    },
     "asar": false,
     "appId": "de.nordgedanken.ls_vertretungsplan_desktop",
     "category": "public.app-category.education",
@@ -34,8 +43,9 @@
     },
     "win": {
       "iconUrl": "https://github.com/MTRNord/ls-vertretungsplan-desktop/tree/master/app/LS.ico?raw=true",
+      "icon": "app/LS.ico",
       "remoteReleases": "http://ls-desktop.herokuapp.com/download/0.1.1/",
-      "icon": "app/LS.ico"
+      "target": "nsis"
     },
     "linux": {
       "target": [

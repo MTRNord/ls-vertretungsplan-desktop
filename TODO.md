@@ -1,4 +1,4 @@
 TODO
 ====
 
- - Make setup script for easy building
+See Issues for TODO's

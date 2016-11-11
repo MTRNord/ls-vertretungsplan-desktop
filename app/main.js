@@ -1,5 +1,5 @@
 const {app, BrowserWindow, dialog, globalShortcut, Tray, Menu, crashReporter, ipcMain} = require('electron')
-const autoUpdater = require('electron').autoUpdater
+const autoUpdater = require('electron-auto-updater')
 const os = require("os")
 const path = require('path');
 const iconPath = path.join(__dirname, 'LS.png');
@@ -28,8 +28,8 @@ function crashInit() {
 }
 
 function update () {
-  var feedUrl = 'http://ls-desktop.herokuapp.com/update/' + os.platform() + '_' + os.arch() + '/' + app.getVersion() + '/';
-  autoUpdater.setFeedURL(feedUrl);
+  //var feedUrl = 'http://ls-desktop.herokuapp.com/update/' + os.platform() + '_' + os.arch() + '/' + app.getVersion() + '/';
+  //autoUpdater.setFeedURL(feedUrl);
 
   setTimeout(function() {autoUpdater.checkForUpdates()}, 30000);
   autoUpdater.on('checking-for-update', function() {
