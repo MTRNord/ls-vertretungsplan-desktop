@@ -1,7 +1,7 @@
 {
   "name": "ls_vertretungsplan_desktop",
   "version": "1.0.0",
-  "description": "Eine Anwendung die den Vertretungsplan auf dem Desktop anzeigt",
+  "description": "Lornsenschule Vertretungsplan",
   "author": "Marcel Radzio",
   "license": "",
   "devDependencies": {
