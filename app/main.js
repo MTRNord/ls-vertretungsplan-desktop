@@ -1,5 +1,5 @@
 const {app, BrowserWindow, dialog, globalShortcut, Tray, Menu, crashReporter, ipcMain} = require('electron')
-const autoUpdater = require('electron-auto-updater')
+const {autoUpdater} = require('electron-auto-updater')
 const os = require("os")
 const path = require('path');
 const iconPath = path.join(__dirname, 'LS.png');
@@ -21,8 +21,8 @@ function crashInit() {
   crashReporter.start({
     productName: 'Lornsenschule Vertretungsplan Desktop',
     companyName: 'Nordgedanken.de',
-    submitURL: 'http://ls-crash-report-server.herokuapp.com',
-    autoSubmit: true
+    submitURL: 'https://ls-crash-report-server.herokuapp.com',
+    autoSubmit: false
   })
   console.log(crashReporter.getLastCrashReport());
 }
@@ -42,6 +42,7 @@ function update () {
 
   autoUpdater.on("error", (err) => {
     about.webContents.send('Updater' , {status:'error'});
+    console.log(err)
     crashInit()
     tray.displayBalloon({
       title: 'Autoupdater',
@@ -87,7 +88,7 @@ function update () {
 
 function createWindow_about () {
   process.on('uncaughtException', (err) => {
-    console.log(err);
+    console.error(err);
     crashInit()
   });
   about = new BrowserWindow({width: 790, height: 600, icon: __dirname + '/LS.ico', title: 'About - Lornsenschule Vertretungsplan', show: false, parent: win, resizable: false})

@@ -25,6 +25,7 @@ build/Releases
 prebuild
 cache
 dist
+buildRelease
 
 # Dependency directory
 node_modules

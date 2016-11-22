@@ -23,7 +23,7 @@
           <h1 id="about">Über</h1>-->
 
           <div id="UpdaterStatus">
-            <div onclick="Update();" class="card card-block" style="border-radius: 5px; -webkit-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); -moz-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); position:relative; height: 10%; background-color: #2196F3; color: #fff">
+            <div class="card card-block" style="border-radius: 5px; -webkit-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); -moz-box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); box-shadow: 6px 6px 22px -6px rgba(0,0,0,0.55); position:relative; height: 10%; background-color: #2196F3; color: #fff">
               <div class="row">
                 <div class="col-md-4" style="position: relative; margin: 0; display: inline-block;">
                   <img src="../LS.png" alt="Logo" height="70px" width="70px" style="margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
@@ -36,6 +36,9 @@
               </div>
             </div>
           </div>
+          <h3>Was kann diese Anwendung?</h3>
+          <div style="text-allign: center;"><p>Die Vertretungsplan Anwendung ist ein <a href="https://github.com/MTRNord/ls-vertretungsplan-desktop">Open Source Projekt<a/> für die Lornsenschule basierend auf der Android App von <a href="https://ls.vertretungsplan.me">Johan v. Forster</a>.
+          Die Angaben werden mir von der App bereit gestellt.</p></div>
         </div>
       </main>
     </div>
@@ -48,15 +51,20 @@
     <script src="../js/bootstrap/v4/bootstrap-material-design.iife.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../js/bootstrap/v4/ie10-viewport-bug-workaround.js"></script>
+
     <script>if (window.module) module = window.module;</script>
     <script>
+      var electron = require('electron');
+      $(document).on('click', 'a[href^="http"]', function(event) {
+        event.preventDefault();
+        electron.shell.openExternal(this.href);
+      });
       console.time('RenderData');
       const {ipcRenderer} = require('electron')
       const Config = require('electron-config');
       const config = new Config();
 
-      //jQuery = window.$ = window.jQuery = require('./js/jquery-3.1.0.min.js');
-      _ = require('lodash');
+      //_ = require('lodash');
 
       function Update() {
         ipcRenderer.send('AutoUpdater')
