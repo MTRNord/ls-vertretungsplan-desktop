@@ -1,14 +1,10 @@
-const {app, BrowserWindow, dialog, globalShortcut, Tray, Menu, crashReporter, ipcMain} = require('electron')
+const {app, BrowserWindow, dialog, Tray, Menu, crashReporter, ipcMain} = require('electron')
 const {autoUpdater} = require('electron-auto-updater')
 const os = require("os")
 const path = require('path');
 const iconPath = path.join(__dirname, 'LS.png');
 const electronLocalshortcut = require('electron-localshortcut');
-const packageJSON = require('./package.json');
-const deps = packageJSON.dependencies;
-const request = require('request');
 const fs = require('fs')
-const windowArray = ['win','about'];
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -86,6 +82,31 @@ function update () {
   });
 }
 
+function createWindow_help () {
+  process.on('uncaughtException', (err) => {
+    console.error(err);
+    crashInit()
+  });
+  help = new BrowserWindow({width: 790, height: 600, icon: __dirname + '/LS.ico', title: 'Help - Lornsenschule Vertretungsplan', show: false, parent: win, resizable: false})
+
+  help.loadURL(`file://${__dirname}/pages/help.html`)
+  electronLocalshortcut.register(help, 'Alt+Ctrl+I', () => {
+    help.show();
+    help.webContents.isDevToolsOpened() ? help.webContents.closeDevTools() : help.webContents.openDevTools()
+  });
+  // Emitted when the window is closed.
+  help.on('closed', () => {
+  })
+
+  help.on('close', function (event) {
+      if( !app.isQuiting){
+          event.preventDefault()
+          help.hide();
+      }
+      return false;
+  });
+}
+
 function createWindow_about () {
   process.on('uncaughtException', (err) => {
     console.error(err);
@@ -144,10 +165,16 @@ function createWindow_win () {
       }
     },
     {
-      label: 'About',
-      accelerator: 'F1',
+      label: 'Über',
       click: function() {
         about.show();
+      }
+    },
+    {
+      label: 'Hilfe',
+      accelerator: 'F1',
+      click: function() {
+        help.show();
       }
     },
     {
@@ -197,9 +224,15 @@ function createWindow_win () {
       submenu: [
         {
           label: 'Über',
-          accelerator: 'F1',
           click: function() {
             about.show();
+          }
+        },
+        {
+          label: 'Hilfe',
+          accelerator: 'F1',
+          click: function() {
+            help.show();
           }
         }
       ]
@@ -213,7 +246,7 @@ function createWindow_win () {
     win.toggleDevTools();
   });
   electronLocalshortcut.register(win, 'F1', () => {
-    about.show();
+    help.show();
   });
   electronLocalshortcut.register(win, 'Ctrl+Q', () => {
     app.isQuiting = true
@@ -264,6 +297,7 @@ function createWindow_win () {
 app.on('ready', () => {
   createWindow_win()
   createWindow_about()
+  createWindow_help()
 })
 
 // Quit when all windows are closed.
@@ -275,6 +309,7 @@ app.on('window-all-closed', () => {
     app.quit()
     electronLocalshortcut.unregisterAll(win);
     electronLocalshortcut.unregisterAll(about);
+    electronLocalshortcut.unregisterAll(help);
   }
 })
 
@@ -286,6 +321,9 @@ app.on('activate', () => {
   }
   if (about === null) {
     createWindow_about()
+  }
+  if (help === null) {
+    createWindow_help()
   }
 })
 

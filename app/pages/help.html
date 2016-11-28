@@ -10,54 +10,35 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../css/bootstrap/v4/bootstrap-material-design.min.css">
     <link rel="stylesheet" type="text/css" href="../css/internal/selection.css">
-    <title>Lornsenschule Vertretungsplan</title>
+    <title>Hilfe - Lornsenschule Vertretungsplan</title>
   </head>
   <body>
       <div class="bmd-layout-container" id="Main">
       <main class="bmd-layout-content">
         <nav class="navbar navbar-light bg-faded navbar-fixed-top">
-          <h3 id="school" class="navbar-brand"></h3>
+          <h3 id="about"  class="navbar-brand">Hilfe</h3>
         </nav>
         <div class="container" style="padding-top: 70px;">
-          <!--<h2 id="school"></h2></br>
-          <header class="bmd-layout-header"><h2 id="school"></h2></header></br>-->
-
-          <ul class="nav nav-tabs" id="Tabs">
-            <li class="nav-item"><a class="nav-link active" data-target="#vertretungen" data-toggle="tab">Vertretungen</a></li>
-            <li class="nav-item"><a class="nav-link" data-target="#messages" data-toggle="tab">Messages</a></li>
-          </ul>
-
-          <div class="tab-content">
-            <div class="tab-pane fade in active" id="vertretungen">
-              <br>
-              <select id="classes" class="custom-select form-control">
-              </select>
-              <div id="days" day="0">
-              </div>
-              <div id="days" day="1">
-              </div>
-            </div>
-            <div class="tab-pane fade" id="messages"><br></div>
-          </div>
+          <dl class="row">
+            <dt class="col-sm-3"><kbd><kbd>CTRL</kbd> + <kbd>R</kbd></kbd></dt>
+            <dd class="col-sm-9">Refresh Vertretungsdaten.</dd>
+            <dt class="col-sm-3"><kbd><kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>I</kbd></kbd></dt>
+            <dd class="col-sm-9">Toggle DevTools.</dd>
+            <dt class="col-sm-3"><kbd><kbd>F1</kbd></kbd></dt>
+            <dd class="col-sm-9">Show this Help.</dd>
+          </dl>
         </div>
       </main>
     </div>
-    <footer class="footer" style="position: absolute;bottom: 0;width: 100%;height: 60px;background-color: #f5f5f5;">
-      <div class="container">
-        <p>Alle Angaben ohne Gewähr.</p>
-      </div>
-    </footer>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <!-- Insert this line above script imports  -->
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
     <script src="../js/jquery-2.2.4.min.js"></script>
-    <script src="../js/jquery.mobile.custom.min.js"></script>
     <script src="../js/bootstrap/v4/tether.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
     <script src="../js/bootstrap/v4/bootstrap-material-design.iife.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../js/bootstrap/v4/ie10-viewport-bug-workaround.js"></script>
     <script>if (window.module) module = window.module;</script>
-    <script src="../js/internal/index.js"></script>
   </body>
 </html>
