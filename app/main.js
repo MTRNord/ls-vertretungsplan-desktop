@@ -13,12 +13,14 @@ let tray
 let menu
 let appIcon
 
+console.log("UPDATER VERSION: " + autoUpdater.version)
+
 function crashInit() {
   crashReporter.start({
     productName: 'Lornsenschule Vertretungsplan Desktop',
     companyName: 'Nordgedanken.de',
     submitURL: 'https://ls-crash-report-server.herokuapp.com',
-    autoSubmit: false
+    autoSubmit: true
   })
   console.log(crashReporter.getLastCrashReport());
 }
@@ -65,7 +67,6 @@ function update () {
 
 
   autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateUrl, quitAndUpdate) {
-    about.webContents.send('Updater' , {status:'no-update'});
     var index = dialog.showMessageBox({
       type: 'info',
       buttons: ['Restart', 'Later'],

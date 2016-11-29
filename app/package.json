@@ -1,7 +1,7 @@
 {
   "name": "ls_vertretungsplan_desktop",
   "productName": "Lornsenschule Vertretungsplan",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "Die Vertretungsplan App zeigt dir den Vertretungsplan der Lornsenschule an.",
   "main": "./main.js",
   "author": {
@@ -16,11 +16,11 @@
       "url": "https://github.com/MTRNord/ls-vertretungsplan-desktop"
     }
   ],
-  "license": "",
+  "license": "GPLv3",
   "dependencies": {
-    "electron-auto-updater": "^0.5.0",
+    "electron-auto-updater": "^0.6.2",
     "electron-config": "^0.2.1",
-    "electron-localshortcut": "^0.6.1",
+    "electron-localshortcut": "^1.0.0",
     "lodash": "^4.15.0",
     "request": "^2.78.0"
   },
