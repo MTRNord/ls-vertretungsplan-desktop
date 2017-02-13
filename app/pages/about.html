@@ -51,7 +51,7 @@
     <script src="../js/bootstrap/v4/bootstrap-material-design.iife.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../js/bootstrap/v4/ie10-viewport-bug-workaround.js"></script>
-
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script>if (window.module) module = window.module;</script>
     <script>
       var electron = require('electron');
@@ -63,11 +63,33 @@
       const {ipcRenderer} = require('electron')
       const Config = require('electron-config');
       const config = new Config();
+      var markdown = require( "markdown" ).markdown;
 
       //_ = require('lodash');
-
+      var socket = io("https://ls-manual-update.herokuapp.com/");
+      function checkManual(callback) {
+        socket.emit('RupdateStatus', "request");
+        socket.on('AupdateStatus', function(msg){
+          console.log(msg["status"]);
+          if (msg["status"] == "local") {
+            console.log("local");
+            console.log(markdown.toHTML(msg["body"]).replace(/<h1>/g, "<h2>").replace(/<\/h1>/g, "</h2>"));
+            callback(false)
+          }else if (msg["status"] == "NOTlocal") {
+            console.log("NOTlocal");
+            callback(true)
+          }
+        });
+      }
       function Update() {
-        ipcRenderer.send('AutoUpdater')
+        checkManual(function(status) {
+          if (status) {
+            console.log("not local");
+            ipcRenderer.send('AutoUpdater')
+          }else{
+            console.log("local");
+          }
+        })
       }
 
       logo = '<img src="../LS.png" alt="Logo" height="70px" width="70px" style="margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">';

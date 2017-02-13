@@ -1,9 +1,9 @@
 {
   "name": "ls_vertretungsplan_desktop",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Lornsenschule Vertretungsplan",
   "author": "Marcel Radzio",
-  "license": "GPLv3",
+  "license": "GPL-3.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/MTRNord/ls-vertretungsplan-desktop.git"
@@ -14,10 +14,15 @@
     "release": "build"
   },
   "devDependencies": {
-    "electron": "^1.4.10",
-    "electron-builder": "10.2.0"
+    "electron": "*",
+    "electron-builder": "*"
   },
   "build": {
+    "appx": {
+      "publisher": "Marcel Radzio",
+      "displayName": "Marcel Radzio",
+      "publisherDisplayName": "Marcel Radzio"
+    },
     "nsis": {
       "oneClick": false,
       "perMachine": true,
@@ -30,6 +35,7 @@
     "asar": false,
     "appId": "de.nordgedanken.ls_vertretungsplan_desktop",
     "category": "public.app-category.education",
+    "npmRebuild": true,
     "dmg": {
       "contents": [
         {
