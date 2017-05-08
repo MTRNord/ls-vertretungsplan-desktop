@@ -96,10 +96,8 @@ export default class MenuBuilder {
     const subMenuHelp = {
       label: 'Help',
       submenu: [
-        { label: 'Learn More', click() { shell.openExternal('http://electron.atom.io'); } },
-        { label: 'Documentation', click() { shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme'); } },
-        { label: 'Community Discussions', click() { shell.openExternal('https://discuss.atom.io/c/electron'); } },
-        { label: 'Search Issues', click() { shell.openExternal('https://github.com/atom/electron/issues'); } }
+        { label: 'Learn More', click() { shell.openExternal('https://ls.lornsenschule.me'); } },
+        { label: 'Search Issues', click() { shell.openExternal('https://github.com/MTRNord/ls-vertretungsplan-desktop/issues'); } }
       ]
     };
 
@@ -161,22 +159,12 @@ export default class MenuBuilder {
       submenu: [{
         label: 'Learn More',
         click() {
-          shell.openExternal('http://electron.atom.io');
-        }
-      }, {
-        label: 'Documentation',
-        click() {
-          shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme');
-        }
-      }, {
-        label: 'Community Discussions',
-        click() {
-          shell.openExternal('https://discuss.atom.io/c/electron');
+          shell.openExternal('https://ls.vertretungsplan.me');
         }
       }, {
         label: 'Search Issues',
         click() {
-          shell.openExternal('https://github.com/atom/electron/issues');
+          shell.openExternal('https://github.com/MTRNord/ls-vertretungsplan-desktop/issues');
         }
       }]
     }];
