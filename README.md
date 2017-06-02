@@ -1,4 +1,6 @@
 # ls-vertretungsplan-desktop
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/MTRNord/ls-vertretungsplan-desktop.svg)](https://greenkeeper.io/)
 UNOFFICIAL Desktop App for the schedule of Lornsenschule, Schleswig
 
 #DOWNLOADS
