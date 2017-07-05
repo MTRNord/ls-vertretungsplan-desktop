@@ -1,7 +1,7 @@
 {
   "name": "ls-vertretungsplan-desktop-v2",
   "productName": "Lornsenschule Vertretungsplan",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Die Vertretungsplan App zeigt dir den Vertretungsplan der Lornsenschule an.",
   "main": "./main.prod.js",
   "author": {
