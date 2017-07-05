@@ -10,10 +10,13 @@
  *
  * @flow
  */
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, Tray, dialog, Menu } from 'electron';
+import { autoUpdater } from 'electron-updater';
+import path from 'path';
 import MenuBuilder from './menu';
 
 let mainWindow = null;
+let tray;
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -22,7 +25,6 @@ if (process.env.NODE_ENV === 'production') {
 
 if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
   require('electron-debug')();
-  const path = require('path');
   const p = path.join(__dirname, '..', 'app', 'node_modules');
   require('module').globalPaths.push(p);
 }
@@ -40,6 +42,53 @@ const installExtensions = async () => {
     .catch(console.log);
 };
 
+function update() {
+  setTimeout(() => { autoUpdater.checkForUpdates(); }, 5000);
+  autoUpdater.on('checking-for-update', () => {
+    tray.displayBalloon({
+      title: 'Autoupdater',
+      content: 'Es wird nach Updates geprüft!'
+    });
+  });
+
+  autoUpdater.on('error', () => {
+    tray.displayBalloon({
+      title: 'Autoupdater',
+      content: 'Ein Fehler ist aufgetreten!'
+    });
+  });
+
+  autoUpdater.on('update-available', () => {
+    tray.displayBalloon({
+      title: 'Autoupdater',
+      content: 'Es gibt ein Update!'
+    });
+  });
+
+  autoUpdater.on('update-not-available', () => {
+    tray.displayBalloon({
+      title: 'Autoupdater',
+      content: 'Es gibt kein Update!'
+    });
+  });
+
+
+  autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName, releaseDate, updateUrl, quitAndUpdate) => {
+    const index = dialog.showMessageBox({
+      type: 'info',
+      buttons: ['Restart', 'Later'],
+      title: 'Lornsenschule Vertretungsplan',
+      message: ('The new version has been downloaded. Please restart the application to apply the updates.'),
+      detail: `${releaseName}\n\n${releaseNotes}`
+    });
+
+    if (index === 1) {
+      return;
+    }
+
+    quitAndUpdate();
+  });
+}
 
 /**
  * Add event listeners...
@@ -67,6 +116,47 @@ app.on('ready', async () => {
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
+  const trayMenu = Menu.buildFromTemplate([
+    {
+      label: 'Refresh Data',
+      accelerator: 'Ctrl+R',
+      click: () => {
+        mainWindow.reload();
+      }
+    },
+    {
+      label: 'Toggle DevTools',
+      accelerator: 'Alt+Command+I',
+      click: () => {
+        mainWindow.show();
+        mainWindow.toggleDevTools();
+      }
+    },
+    {
+      label: 'Quit',
+      accelerator: 'Ctrl+Q',
+      click: () => {
+        app.isQuiting = true;
+        if (process.platform !== 'darwin') {
+          app.quit();
+        }
+      }
+    }
+  ]);
+
+  const iconPath = path.join(__dirname, 'LS.png');
+  tray = new Tray(iconPath);
+  tray.setToolTip('Lornsenschule Schleswig Vertretungsplan');
+  tray.setContextMenu(trayMenu);
+
+  mainWindow.on('show', () => {
+    tray.setHighlightMode('always');
+  });
+
+  tray.on('click', () => {
+    mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show();
+  });
+
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
   mainWindow.webContents.on('did-finish-load', () => {
@@ -75,6 +165,7 @@ app.on('ready', async () => {
     }
     mainWindow.show();
     mainWindow.focus();
+    update();
   });
 
   mainWindow.on('closed', () => {

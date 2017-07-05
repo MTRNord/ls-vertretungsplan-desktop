@@ -1,6 +1,6 @@
 {
-  "name": "electron-react-boilerplate",
-  "productName": "ElectronReact",
+  "name": "ls-vertretungsplan-desktop-v2",
+  "productName": "Lornsenschule Vertretungsplan",
   "version": "0.12.0",
   "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
   "scripts": {
@@ -14,10 +14,10 @@
     "lint-styles-fix": "stylefmt -r app/*.css app/components/*.css",
     "hot-updates-server": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.config.renderer.dev.js",
     "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
-    "build-dll": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.dev.dll.js --progress --profile --colors",
-    "build-main": "cross-env NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.main.prod.js --progress --profile --colors",
+    "build-dll": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.dev.dll.js --progress --profile --colors --display-error-details",
+    "build-main": "cross-env NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.main.prod.js --progress --profile --colors --display-error-details",
     "build-renderer": "cross-env NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.prod.js --progress --profile --colors",
-    "start": "cross-env NODE_ENV=production electron ./app/",
+    "start": "cross-env NODE_ENV=development electron ./app/",
     "prestart": "npm run build",
     "flow": "flow check",
     "flow-typed": "rimraf flow-typed/npm && flow-typed install --overwrite || true",
@@ -31,16 +31,20 @@
   },
   "browserslist": "electron 1.6",
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.develar.ElectronReact",
+    "productName": "Lornsenschule Vertretungsplan",
+    "appId": "de.nordgedanken.lornsenschule_v2",
     "files": [
       "dist/",
       "node_modules/",
       "app.html",
       "main.prod.js",
       "main.prod.js.map",
-      "package.json"
+      "package.json",
+      "LS.png"
     ],
+    "publish": {
+      "provider": "github"
+    },
     "dmg": {
       "contents": [
         {
@@ -55,10 +59,18 @@
         }
       ]
     },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "language": "0407",
+      "license": "./LICENSE"
+    },
     "win": {
+      "icon": "app/LS.ico",
       "target": [
         "nsis"
-      ]
+      ],
+      "publish": "github"
     },
     "linux": {
       "target": [
@@ -73,16 +85,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chentsulin/electron-react-boilerplate.git"
+    "url": "git+https://github.com/MTRNord/ls-vertretungsplan-desktop.git"
   },
   "author": {
-    "name": "C. T. Lin",
-    "email": "chentsulin@gmail.com",
-    "url": "https://github.com/chentsulin"
+    "name": "MTRNord",
+    "email": "mtrnord1@gmail.com",
+    "url": "https://github.com/MTRNord"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chentsulin/electron-react-boilerplate/issues"
+    "url": "https://github.com/MTRNord/ls-vertretungsplan-desktop/issues"
   },
   "keywords": [
     "electron",
@@ -138,8 +150,8 @@
     "cross-spawn": "^5.1.0",
     "css-loader": "^0.28.0",
     "devtron": "^1.4.0",
-    "electron": "^1.6.6",
-    "electron-builder": "^17.1.1",
+    "electron": "^1.6.11",
+    "electron-builder": "^19.12.0",
     "electron-devtools-installer": "^2.2.0",
     "enzyme": "^2.8.2",
     "enzyme-to-json": "^1.5.1",
@@ -187,17 +199,23 @@
   },
   "dependencies": {
     "electron-debug": "^1.1.0",
+    "electron-updater": "^1.15.0",
     "font-awesome": "^4.7.0",
     "history": "^4.6.1",
+    "image-webpack-loader": "^3.3.0",
+    "material-ui": "^0.18.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-hot-loader": "3.0.0-beta.6",
+    "react-lazy-load": "^3.0.12",
     "react-redux": "^5.0.4",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "react-router-redux": "^5.0.0-alpha.6",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.1",
     "source-map-support": "^0.4.15"
   },
   "devEngines": {

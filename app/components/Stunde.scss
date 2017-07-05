@@ -1,0 +1,66 @@
+@import "./material.indigo-pink.min.css";
+html {
+  width: 100%;
+}
+body {
+  margin-left: 50px !important;
+  width: 100%;
+}
+.mdl-card + .mdl-card {
+  margin-top: 40px;
+}
+
+.StundeContainerText {
+	color: black !important;
+}
+
+.StundeContainer {
+	color: black !important;
+	// padding-left: 160px;
+}
+
+// Card styles
+.mdl-card--horizontal {
+  flex-direction: column;
+  height: 1vh; /* 1 */
+  padding-left: 170px;
+  width: 625px !important;
+
+  .mdl-card__media {
+    left: 0;
+    position: absolute;
+    width: 150px;
+  }
+
+  .mdl-card__supporting-text {
+    flex: 1 1 auto;
+    width: auto;
+  }
+}
+
+.mdl-card--horizontal-2 {
+  flex-direction: row;
+  flex-wrap: wrap;
+  min-height: 0px;
+
+  .mdl-card__title {
+    align-items: flex-start;
+    flex-direction: column;
+    flex: 1 auto;
+    float: left;
+  }
+  .mdl-card__title-text {
+    align-self: flex-start;
+  }
+  .mdl-card__media {
+    flex: 0 auto;
+    float: right;
+    height: 112px;
+    margin: 16px 16px 0 0;
+    width: 112px;
+  }
+  .mdl-card__actions {
+    clear: both;
+    flex: 1 auto;
+  }
+}
